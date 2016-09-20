@@ -1,0 +1,226 @@
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-if="holdObject=='invoice'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload {{holdObject}}</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Invoice*</label>
+                <input type="text" class="form-control" name="invoiceNumber" ng-model="modalData.invoiceNumber" required="">
+                <div class="error-msg" ng-show="modalForm1.invoiceNumber.$invalid && modalForm1.invoiceNumber.$touched">Please Enter Invoice Number</div>
+
+            </div>
+        </div>
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label>Date*</label>
+                  <div class="input-group">
+                      <input type="text" name="invoiceNumberDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.invoiceNumberDate" is-open="popup.fromLicense" datepicker-options="dateOptions" required readonly/>
+                      <div class="error-msg" ng-show="modalForm1.invoiceNumberDate.$invalid && modalForm1.invoiceNumberDate.$touched">Please Enter Invoice Number Date</div>
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.fromLicense = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>
+
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-if="holdObject=='products'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload {{holdObject}}</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Industry*</label>
+                <multiple-select name="industry" required ng-model="modalData.product.category.industry._id" ng-name="modalData.product.category.industry.name" api="searchIndustry" ng-create="industrySave"></multiple-select>
+                <div class="error-msg" ng-show="modalForm1.industry.$invalid">Please Select Industry</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Category*</label>
+                <multiple-select name="category" required ng-model="modalData.product.category._id" filter='{"industry":"{{modalData.product.category.industry._id}}"}' ng-name = "modalData.product.category.name" api="searchCategory" ng-create="categorySave"></multiple-select>
+                <div class="error-msg" ng-show="modalForm1.category.$invalid">Please Select Category</div>
+
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Product*</label>
+                <multiple-select name="product" required ng-model="modalData.product._id" filter='{"category":"{{modalData.product.category._id}}"}' ng-name="modalData.product.name" api="searchProduct"></multiple-select>
+                <div class="error-msg" ng-show="modalForm1.product.$invalid">Please Select Product</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Item*</label>
+                <input type="text" class="form-control" name="item" ng-model="modalData.item" required="">
+                <div class="error-msg" ng-show="modalForm1.item.$invalid && modalForm1.item.$touched">Please Enter Item</div>
+
+            </div>
+        </div>
+      </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>
+
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-if="holdObject=='shareWith'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload {{holdObject}}</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Office*</label>
+                <multiple-select name="office" required ng-model="modalData.office" filter='{"company":"{{formData.company}}"}' ng-name="modalData.name" api="searchOffice"></multiple-select>
+                <div class="error-msg" ng-show="modalForm1.office.$invalid">Please Select Office</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Persons Assigned*</label>
+                <ui-select multiple tagging="tagTransform" on-select="clicked($select.selected)" name="Persons" ng-model="modalData.persons" theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="natureOfLoss in shareWith | filter:$select.search" refresh-delay="0" refresh="refreshShareWith($select.search,modalData.office)">{{natureOfLoss.name}}</ui-select-choices>
+                </ui-select>
+                <div class="error-msg" ng-show="formName.Persons.$invalid && formName.Persons.$touched">Please Enter name to Share With</div>
+            </div>
+        </div>
+      </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>
+
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-if="holdObject=='LRs'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload {{holdObject}}</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>LR Number*</label>
+                <input type="text" class="form-control" name="lrNumber" ng-model="modalData.lrNumber" required="">
+                <div class="error-msg" ng-show="modalForm1.lrNumber.$invalid && modalForm1.lrNumber.$touched">Please Enter LR Number</div>
+
+            </div>
+        </div>
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label>Date*</label>
+                  <div class="input-group">
+                      <input type="text" name="lrNumberDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.lrNumberDate" is-open="popup.fromLicense" datepicker-options="dateOptions" required readonly/>
+                      <div class="error-msg" ng-show="modalForm1.lrNumberDate.$invalid && modalForm1.lrNumberDate.$touched">Please Enter LR Number Date</div>
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.fromLicense = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>
+
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-if="holdObject=='Vehicle'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload {{holdObject}}</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Vehicle Number*</label>
+                <input type="text" class="form-control" name="vehicleNumber" ng-model="modalData.vehicleNumber" required="">
+                <div class="error-msg" ng-show="modalForm1.vehicleNumber.$invalid && modalForm1.vehicleNumber.$touched">Please Enter Vehicle Number</div>
+
+            </div>
+        </div>
+      </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>
+
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-if="holdObject=='Others'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload {{holdObject}}</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Product ID *</label>
+                <input type="text" class="form-control" name="productID" ng-model="modalData.productID" required="">
+                <div class="error-msg" ng-show="modalForm1.productID.$invalid && modalForm1.productID.$touched">Please Enter Product ID</div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Location ID *</label>
+                <input type="text" class="form-control" name="locationID" ng-model="modalData.locationID" required="">
+                <div class="error-msg" ng-show="modalForm1.locationID.$invalid && modalForm1.locationID.$touched">Please Enter Location ID</div>
+
+            </div>
+        </div>
+      </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>

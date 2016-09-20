@@ -1,0 +1,76 @@
+<div class="modal-header red-bg">
+  <div class="pull-right">
+    <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+  </div>
+    <h5 class="modal-title">Send an email</h5>
+</div>
+<div class="modal-body">
+  <div class="billing-sec no-float">
+    <div class="row">
+      <div class="col-md-6 field">
+        <label>To  </label>
+        <ui-select multiple tagging ng-model="email.to">
+           <ui-select-match placeholder="">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+           <ui-select-choices repeat="emailto in emailtos">{{emailto.email}}</ui-select-choices>
+         </ui-select>
+      </div>
+      <div class="col-md-6 field">
+        <label>Cc </label>
+        <ui-select multiple tagging ng-model="email.cc">
+           <ui-select-match placeholder="">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+           <ui-select-choices repeat="emailto in emailtos">{{emailto.email}}</ui-select-choices>
+         </ui-select>
+      </div>
+      <div class="col-md-12 field">
+        <label>Bcc <span>*</span></label>
+        <ui-select multiple tagging ng-model="email.bcc">
+           <ui-select-match placeholder="">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+           <ui-select-choices repeat="emailto in emailtos">{{emailto.email}}</ui-select-choices>
+         </ui-select>
+      </div>
+      <div class="col-md-12 field">
+        <label>Subject <span>*</span></label>
+        <input type="text" placeholder="" ng-model="email.subject">
+      </div>
+      <div class="col-md-12 field">
+        <label>Message <span>*</span></label>
+        <textarea ui-tinymce="tinymceOptions" ng-model="email.message"></textarea>
+      </div>
+      <div class="col-md-12 field">
+        <label>Attachments <span>*</span></label>
+        <div class="custom-tabs">
+           <uib-tabset>
+             <uib-tab ng-repeat="file in files">
+               <uib-tab-heading>
+                 {{file.type}} <span ng-if="file.count!=0">({{file.count}})</span>
+               </uib-tab-heading>
+                <div class="file-selector">
+                  <div class="text-right">Select All <span class="check-bx"><input type="checkbox"><i class="ln-checkmark aired"></i></span></div>
+                  <div class="text-center" ng-if="file.files.length==0">No files found.</div>
+                  <div class="scroll-x">
+                    <div class="row" ng-if="file.files.length!=0">
+                      <div class="col-md-2 mter" ng-repeat="f in file.files">
+                        <div class="filebx">
+                          <div class="dl-bx">
+                            <input type="checkbox" name="name" value="" ng-model="f.selection">
+                            <i class="ln-checkmark aired"></i>
+                          </div>
+                          <i class="ln-document"></i>
+                          <p>{{f.name}}</p>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+             </uib-tab>
+           </uib-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-red btn-round" type="submit">Send</button>
+</div>

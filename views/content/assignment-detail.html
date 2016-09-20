@@ -1,0 +1,750 @@
+<form name="formName" ng-submit="submit(formData);">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>Create Assignment</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Company*</label>
+                                        <multiple-select name="company" required ng-model="formData.company" ng-name="name.company" api="searchCompany"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.company.$invalid">Please Select Company</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Branch Office*</label>
+                                        <multiple-select name="branchOffice" required ng-model="formData.branch" filter='{"company":"{{formData.company}}"}' ng-name="name.branch" api="searchBranch"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.branchOffice.$invalid">Please Select Branch Office</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Type of Claim*</label>
+                                        <multiple-select name="typeOfClaim" required ng-model="formData.typeOfClaim" ng-name="name.typeOfClaim" api="searchTypeOfClaim"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.typeOfClaim.$invalid">Please Select Type of Claim </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Department*</label>
+                                        <multiple-select name="department" required ng-model="formData.department" ng-name="name.department" api="searchDepartment"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.department.$invalid">Please Select Department </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nature of Survey*</label>
+                                        <multiple-select name="natureOfSurvey" required ng-model="formData.natureOfSurvey" ng-name="name.natureOfSurvey" api="searchNatureOfSurvey"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.natureOfSurvey.$invalid">Please Select Nature of Survey</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Owner*</label>
+                                        <multiple-select name="owner" required ng-model="formData.owner" filter='{"company":"{{formData.company}}"}' ng-name="name.owner" api="searchEmployee"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.owner.$invalid">Please Select Branch Office</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                            <div class="widget-title">
+                                <a class="btn btn-primary pull-right" ng-click="addModal('modal-assignment','','shareWith','','',formData.shareWith)">Add New</a>
+                                <h3>Share With</h3>
+                            </div>
+                            <div class="sec">
+                                <div class="table-responsive">
+                                    <table class="table table-input" ng-if="formData.shareWith.length!=0">
+                                        <thead>
+                                            <tr>
+                                                <th>Office</th>
+                                                <th>Persons</th>
+                                                <th width="150px">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in formData.shareWith">
+                                                <td>{{data.name}}</td>
+                                                <td><span ng-repeat="person in data.persons">{{person.name}}<span ng-if="$index!=data.persons.length-1">, </span></span>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" ng-click="addModal('modal-assignment',$index,'shareWith',data, '',formData.shareWith)">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger" ng-click="deleteElements($index, formData.shareWith)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Is Insured*</label>
+                                        <toggle-switch ng-model="formData.isInsured" class="switch-small switch-success"></toggle-switch>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Post Loss*</label>
+                                        <toggle-switch ng-model="formData.postLoss" class="switch-small switch-success"></toggle-switch>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                            <div class="widget-title">
+                                <h3>Appointed By</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Segment</label>
+                                        <multiple-select name="segment" required ng-model="formData.segment" ng-name="name.segment" api="searchCustomerSegment"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.segment.$invalid">Please Select Segment</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Customer</label>
+                                        <multiple-select name="customer" required ng-model="formData.customer" filter='{"customerSegment":"{{formData.segment}}"}' ng-name="name.customer" api="searchCustomer"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.customer.$invalid">Please Select Customer</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget" ng-if="formData.isInsured && formData.postLoss">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Appointment Mail*</label>
+                                        <upload-image ng-model="formData.appointment"></upload-image>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Intimated Loss*</label>
+                                        <input type="text" name="intimatedLoss" ng-model="formData.intimatedLoss" class="form-control" required>
+                                        <div class="error-msg" ng-show="formName.intimatedLoss.$invalid && formName.intimatedLoss.$touched">Please Enter Intimated Loss</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date Of Appointment</label>
+                                        <div class="input-group">
+                                            <input type="text" name="dateOfAppointment" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfAppointment" is-open="popup.dateOfAppointment" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                                readonly/>
+                                            <span class="input-group-btn">
+                                              <button type="button" class="btn btn-default" ng-click="popup.dateOfAppointment = true">
+                                                  <i class="fa fa-calendar"></i>
+                                              </button>
+                                          </span>
+                                        </div>
+                                        <div class="error-msg" ng-show="formName.dateOfAppointment.$invalid && formName.dateOfAppointment.$touched">Please Enter Date of Intimation</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date Of Intemation</label>
+                                        <div class="input-group">
+                                            <input type="text" name="dateOfIntimation" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfIntimation" is-open="popup.dateOfIntimation" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                                readonly/>
+                                            <span class="input-group-btn">
+                                              <button type="button" class="btn btn-default" ng-click="popup.dateOfIntimation = true">
+                                                  <i class="fa fa-calendar"></i>
+                                              </button>
+                                          </span>
+                                        </div>
+                                        <div class="error-msg" ng-show="formName.dateOfIntimation.$invalid && formName.dateOfIntimation.$touched">Please Enter Date of Intimation</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Insured's Office</label>
+                                        <multiple-select name="insuredOffice" filter='{"company":"{{formData.company}}"}' required ng-model="formData.insuredOffice" ng-name="name.office" api="searchInsuredOffice"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.insuredOffice.$invalid">Please Select Insured's Office</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Insured's Officer</label>
+                                        <multiple-select name="insuredOfficer" required ng-model="formData.insuredOfficer" filter='{"customer":"{{formData.insuredOffice}}"}' ng-name="name.office" api="searchOfficer"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.insuredOfficer.$invalid">Please Select Insured Officer</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Cause Of Loss</label>
+                                        <multiple-select name="causeOfLoss" required ng-model="formData.causeOfLoss" filter='{"department":"{{formData.department}}"}' ng-name="name.causeOfLoss" api="searchCauseLoss"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.causeOfLoss.$invalid">Please Select Cause Of Loss</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nature Of Loss</label>
+                                        <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" on-select="clicked($select.selected)" name="natureOfLoss" ng-model="formData.natureOfLoss" theme="bootstrap" required>
+                                            <ui-select-match>{{$item.name}}</ui-select-match>
+                                            <ui-select-choices repeat="natureOfLoss in natureLoss | filter:$select.search" refresh-delay="0" refresh="refreshNature($select.search, formData.causeOfLoss)">{{natureOfLoss.name}}</ui-select-choices>
+                                        </ui-select>
+                                        <div class="error-msg" ng-show="formName.natureOfLoss.$invalid && formName.natureOfLoss.$touched">Please Enter Nature Of Loss</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Insurer</label>
+                                        <multiple-select name="insurer" required ng-model="formData.insurer" filter='{"company":"{{formData.company}}"}' ng-name="name.insurer" api="searchInsurerOffice"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.insurer.$invalid">Please Select Insurer</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Broker</label>
+                                        <multiple-select name="broker" required ng-model="formData.broker" filter='{"company":"{{formData.company}}"}' ng-name="name.broker" api="searchBroker"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.broker.$invalid">Please Select Broker</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Policy Type</label>
+                                        <multiple-select name="policyType" required ng-model="formData.policyType" filter='{"department":"{{formData.department}}"}' ng-name="name.policyType" api="searchPolicyType"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.policyType.$invalid">Please Select Policy Type</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Policy Document</label>
+                                        <multiple-select name="policyDoc" required ng-model="formData.policyDoc" filter='{"policyType":"{{formData.policyType}}"}' ng-name="name.policyDoc" api="getPolicyDoc"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.policyDoc.$invalid">Please Select Policy Document</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget" ng-if="formData.isInsured && !formData.postLoss">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Appointment Mail*</label>
+                                      <upload-image ng-model="formData.appointment" no-view></upload-image>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Intimated Loss*</label>
+                                      <input type="text" name="intimatedLoss" ng-model="formData.intimatedLoss" class="form-control" required>
+                                      <div class="error-msg" ng-show="formName.intimatedLoss.$invalid && formName.intimatedLoss.$touched">Please Enter Intimated Loss</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Date Of Appointment</label>
+                                      <div class="input-group">
+                                          <input type="text" name="dateOfAppointment" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfAppointment" is-open="popup.dateOfAppointment" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                              readonly/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.dateOfAppointment = true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                      </div>
+                                      <div class="error-msg" ng-show="formName.dateOfAppointment.$invalid && formName.dateOfAppointment.$touched">Please Enter Date of Intimation</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Date Of Intemation</label>
+                                      <div class="input-group">
+                                          <input type="text" name="dateOfIntimation" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfIntimation" is-open="popup.dateOfIntimation" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                              readonly/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.dateOfIntimation = true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                      </div>
+                                      <div class="error-msg" ng-show="formName.dateOfIntimation.$invalid && formName.dateOfIntimation.$touched">Please Enter Date of Intimation</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Insured's Office</label>
+                                      <multiple-select name="insuredOffice" filter='{"company":"{{formData.company}}"}' required ng-model="formData.insuredOffice" ng-name="name.office" api="searchInsuredOffice"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.insuredOffice.$invalid">Please Select Insured's Office</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Insured's Officer</label>
+                                      <multiple-select name="insuredOfficer" required ng-model="formData.insuredOfficer" filter='{"_id":"{{formData.insuredOffice}}"}' ng-name="name.office" api="searchGetOfficer"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.insuredOfficer.$invalid">Please Select Insured Officer</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Insurer</label>
+                                      <multiple-select name="insurer" required ng-model="formData.insurer" filter='{"company":"{{formData.company}}"}' ng-name="name.insurer" api="searchInsurerOffice"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.insurer.$invalid">Please Select Insurer</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Broker</label>
+                                      <multiple-select name="broker" required ng-model="formData.broker" filter='{"company":"{{formData.company}}"}' ng-name="name.broker" api="searchBroker"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.broker.$invalid">Please Select Broker</div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget" ng-if="!formData.isInsured && formData.postLoss">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Appointment Mail*</label>
+                                      <upload-image ng-model="formData.appointment"></upload-image>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Intimated Loss*</label>
+                                      <input type="text" name="intimatedLoss" ng-model="formData.intimatedLoss" class="form-control" required>
+                                      <div class="error-msg" ng-show="formName.intimatedLoss.$invalid && formName.intimatedLoss.$touched">Please Enter Intimated Loss</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Date Of Appointment</label>
+                                      <div class="input-group">
+                                          <input type="text" name="dateOfAppointment" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfAppointment" is-open="popup.dateOfAppointment" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                              readonly/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.dateOfAppointment = true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                      </div>
+                                      <div class="error-msg" ng-show="formName.dateOfAppointment.$invalid && formName.dateOfAppointment.$touched">Please Enter Date of Intimation</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Date Of Intemation</label>
+                                      <div class="input-group">
+                                          <input type="text" name="dateOfIntimation" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfIntimation" is-open="popup.dateOfIntimation" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                              readonly/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.dateOfIntimation = true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                      </div>
+                                      <div class="error-msg" ng-show="formName.dateOfIntimation.$invalid && formName.dateOfIntimation.$touched">Please Enter Date of Intimation</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Insured's Office</label>
+                                      <multiple-select name="insuredOffice" filter='{"company":"{{formData.company}}"}' required ng-model="formData.insuredOffice" ng-name="name.office" api="searchInsuredOffice"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.insuredOffice.$invalid">Please Select Insured's Office</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Insured's Officer</label>
+                                      <multiple-select name="insuredOfficer" required ng-model="formData.insuredOfficer" filter='{"_id":"{{formData.insuredOffice}}"}' ng-name="name.office" api="searchGetOfficer"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.insuredOfficer.$invalid">Please Select Insured Officer</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Cause Of Loss</label>
+                                      <multiple-select name="causeOfLoss" required ng-model="formData.causeOfLoss" filter='{"department":"{{formData.department}}"}' ng-name="name.causeOfLoss" api="searchCauseLoss"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.causeOfLoss.$invalid">Please Select Cause Of Loss</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Nature Of Loss</label>
+                                      <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" on-select="clicked($select.selected)" name="natureOfLoss" ng-model="formData.natureOfLoss" theme="bootstrap" required>
+                                          <ui-select-match>{{$item.name}}</ui-select-match>
+                                          <ui-select-choices repeat="natureOfLoss in natureLoss | filter:$select.search" refresh-delay="0" refresh="refreshNature($select.search, formData.causeOfLoss)">{{natureOfLoss.name}}</ui-select-choices>
+                                      </ui-select>
+                                      <div class="error-msg" ng-show="formName.natureOfLoss.$invalid && formName.natureOfLoss.$touched">Please Enter Nature Of Loss</div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget" ng-if="!formData.isInsured && !formData.postLoss">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Appointment Mail*</label>
+                                      <upload-image ng-model="formData.appointment"></upload-image>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Intimated Loss*</label>
+                                      <input type="text" name="intimatedLoss" ng-model="formData.intimatedLoss" class="form-control" required>
+                                      <div class="error-msg" ng-show="formName.intimatedLoss.$invalid && formName.intimatedLoss.$touched">Please Enter Intimated Loss</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Date Of Appointment</label>
+                                      <div class="input-group">
+                                          <input type="text" name="dateOfAppointment" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfAppointment" is-open="popup.dateOfAppointment" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                              readonly/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.dateOfAppointment = true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                      </div>
+                                      <div class="error-msg" ng-show="formName.dateOfAppointment.$invalid && formName.dateOfAppointment.$touched">Please Enter Date of Intimation</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Date Of Intemation</label>
+                                      <div class="input-group">
+                                          <input type="text" name="dateOfIntimation" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.dateOfIntimation" is-open="popup.dateOfIntimation" ng-change="chageDOB(formData.birthDate)" datepicker-options="dateOptions"
+                                              readonly/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.dateOfIntimation = true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                      </div>
+                                      <div class="error-msg" ng-show="formName.dateOfIntimation.$invalid && formName.dateOfIntimation.$touched">Please Enter Date of Intimation</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Insured's Office</label>
+                                      <multiple-select name="insuredOffice" filter='{"company":"{{formData.company}}"}' required ng-model="formData.insuredOffice" ng-name="name.office" api="searchInsuredOffice"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.insuredOffice.$invalid">Please Select Insured's Office</div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Insured's Officer</label>
+                                      <multiple-select name="insuredOfficer" required ng-model="formData.insuredOfficer" filter='{"_id":"{{formData.insuredOffice}}"}' ng-name="name.office" api="searchGetOfficer"></multiple-select>
+                                      <div class="error-msg" ng-show="formName.insuredOfficer.$invalid">Please Select Insured Officer</div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="widget">
+                            <div class="form-elements-sec">
+                                <div class="widget-title">
+                                    <h3>Site Address</h3>
+                                </div>
+                                <address-form ng-valid="companyForm" ng-model="formData"></address-form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="widget">
+                            <div class="form-elements-sec">
+                                <div class="widget-title">
+                                    <h3>Site Person Details</h3>
+                                </div>
+                                <div class="form-group">
+                                    <label>Site Person</label>
+                                    <input type="text" class="form-control" ng-model="formData.siteNumber">
+                                </div>
+                                <div class="form-group">
+                                    <label>Site Phone</label>
+                                    <input type="text" class="form-control" ng-model="formData.siteMobile">
+                                </div>
+                                <div class="form-group">
+                                    <label>Site Email</label>
+                                    <input type="email" class="form-control" ng-model="formData.siteEmail">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <a class="btn btn-primary pull-right" ng-click="addModal('modal-assignment','','products','','',formData.products)">Add New</a>
+                            <h3>Products</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="table-responsive">
+                                <table class="table table-input" ng-if="formData.products.length!=0">
+                                    <thead>
+                                        <tr>
+                                            <th>Industry</th>
+                                            <th>Category</th>
+                                            <th>Product</th>
+                                            <th>Item</th>
+                                            <th width="150px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in formData.products track by $index">
+                                            <td>{{data.product.category.industry.name}}</td>
+                                            <td>{{data.product.category.name}}</td>
+                                            <td>{{data.product.name}}</td>
+                                            <td>{{data.item}}</td>
+                                            <td>
+                                                <a class="btn btn-primary" ng-click="addModal('modal-assignment',$index,'products',data, '',formData.products)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.products)">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget" ng-if="name.department=='Marine Cargo'">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <a class="btn btn-primary pull-right" ng-click="addModal('modal-assignment','','invoice','','',formData.invoice)">Add New</a>
+                            <!-- <button class="btn btn-primary pull-right" type="submit" ng-disabled="modelData.$invalid">Add New</button> -->
+
+                            <h3>Invoices</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="table-responsive">
+                                <table class="table table-input" ng-if="formData.invoice.length!=0">
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice #</th>
+                                            <th>Date</th>
+                                            <th width="150px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in formData.invoice track by $index">
+                                            <td>{{data.invoiceNumber}}</td>
+                                            <td>{{data.invoiceNumberDate| date:'dd MMM yyyy'}}</td>
+                                            <td>
+                                                <a class="btn btn-primary" ng-click="addModal('modal-assignment',$index,'invoice',data, '',formData.invoice)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.invoice)">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget" ng-if="name.department=='Marine Cargo'">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <a class="btn btn-primary pull-right" ng-click="addModal('modal-assignment','','LRs','','',formData.LRs)">Add New</a>
+                            <h3>LRs</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="table-responsive">
+                                <table class="table table-input" ng-if="formData.LRs.length!=0">
+                                    <thead>
+                                        <tr>
+                                            <th>LR #</th>
+                                            <th>Date</th>
+                                            <th width="150px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in formData.LRs">
+                                            <td>{{data.lrNumber}} #</td>
+                                            <td>{{data.lrNumberDate| date:'dd MMM yyyy'}}</td>
+                                            <td>
+                                                <a class="btn btn-primary" ng-click="addModal('modal-assignment',$index,'LRs',data, '',formData.LRs)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.LRs)">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget" ng-if="name.department=='Marine Cargo' || name.department=='Motor'">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <a class="btn btn-primary pull-right" ng-click="addModal('modal-assignment','','Vehicle','','',formData.vehicleNumber)">Add New</a>
+                            <h3>Vehicle Number</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="table-responsive">
+                                <table class="table table-input" ng-if="formData.vehicleNumber.length!=0">
+                                    <thead>
+                                        <tr>
+                                            <th>Vehicle #</th>
+                                            <th width="150px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in formData.vehicleNumber">
+                                            <td>{{data.vehicleNumber}} #</td>
+                                            <td>
+                                                <a class="btn btn-primary" ng-click="addModal('modal-assignment',$index,'Vehicle',data, '',formData.vehicleNumber)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.vehicleNumber)">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget" ng-if="name.department!='Marine Cargo' && name.department!='Motor'">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <a class="btn btn-primary pull-right" ng-click="addModal('modal-assignment','','Others','','',formData.others)">Add New</a>
+                            <h3>Others</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="table-responsive">
+                                <table class="table table-input" ng-if="formData.others.length!=0">
+                                    <thead>
+                                        <tr>
+                                            <th>Location ID</th>
+                                            <th>Product ID</th>
+                                            <th width="150px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in formData.others">
+                                            <td>{{data.locationID}}</td>
+                                            <td>{{data.productID}}</td>
+                                            <td>
+                                                <a class="btn btn-primary" ng-click="addModal('modal-assignment',$index,'Others',data, '',formData.others)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.others)">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+            <button class="btn btn-default" ui-sref="assignment-list">Cancel</button>
+        </div>
+    </div>
+</form>
