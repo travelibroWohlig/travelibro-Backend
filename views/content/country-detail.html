@@ -40,9 +40,8 @@
                                     <div class="error-msg" ng-show="countryform.countryCode.$invalid && countryform.countryCode.$touched">Please Enter Country Code</div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description*</label>
-                                    <input type="text" name="Description" ng-model="formData.description" class="form-control" required>
-                                    <div class="error-msg" ng-show="countryform.description.$invalid && countryform.description.$touched">Please Enter Description</div>
+                                    <label>Description</label>
+                                    <textarea name="Description" ng-model="formData.description" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Currency*</label>

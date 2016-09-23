@@ -51,7 +51,7 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     })
 
     .state('countryMustDo-list', {
-        url: "/countryMustDo-list/:id/{page:.*}/{keyword:.*}",
+        url: "/countryMustDo-list/{page:.*}/{keyword:.*}",
         templateUrl: "views/template.html",
         controller: 'CountryMustDoCtrl',
         params: {
@@ -61,13 +61,13 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     })
 
     .state('createCountryMustDo', {
-        url: "/countryMustDo-create",
+        url: "/countryMustDo-detail",
         templateUrl: "views/template.html",
         controller: 'CreateCountryMustDoCtrl'
     })
 
     .state('editCountryMustDo', {
-        url: "/countryMustDo-edit/:id/:mustDoId",
+        url: "/countryMustDo-edit/:id",
         templateUrl: "views/template.html",
         controller: 'EditCountryMustDoCtrl'
     })
@@ -92,6 +92,28 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
         url: "/city-edit/:id",
         templateUrl: "views/template.html",
         controller: 'EditCityCtrl'
+    })
+
+    .state('cityMustDo-list', {
+        url: "/cityMustDo-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CityMustDoCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createCityMustDo', {
+        url: "/cityMustDo-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateCityMustDoCtrl'
+    })
+
+    .state('editCityMustDo', {
+        url: "/cityMustDo-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCityMustDoCtrl'
     })
 
     ;
@@ -538,18 +560,18 @@ firstapp.config(function($translateProvider) {
 });
 
 firstapp.directive('alphaNumeric', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attr, ngModelCtrl) {
-      function fromUser(text) {
-        var transformedInput = text.replace(/[^0-9a-zA-Z]/g, '');
-        if (transformedInput !== text) {
-          ngModelCtrl.$setViewValue(transformedInput);
-          ngModelCtrl.$render();
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attr, ngModelCtrl) {
+            function fromUser(text) {
+                var transformedInput = text.replace(/[^0-9a-zA-Z]/g, '');
+                if (transformedInput !== text) {
+                    ngModelCtrl.$setViewValue(transformedInput);
+                    ngModelCtrl.$render();
+                }
+                return transformedInput; // or return Number(transformedInput)
+            }
+            ngModelCtrl.$parsers.push(fromUser);
         }
-        return transformedInput; // or return Number(transformedInput)
-      }
-      ngModelCtrl.$parsers.push(fromUser);
-    }
-  };
+    };
 });

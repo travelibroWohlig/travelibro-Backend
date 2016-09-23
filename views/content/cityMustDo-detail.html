@@ -26,51 +26,35 @@
                     <div class="widget-title">
                         <h3>City</h3>
                     </div>
-                    <form name="cityform" role="form" class="sec ng-pristine ng-valid">
+                    <form name="mustDoForm" role="form" class="sec ng-pristine ng-valid">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group ui-select">
                                     <label>Country*</label>
                                     <multiple-select name="country" required ng-model="formData.country" ng-name="name.country" api="searchCountry" ng-create="countrySave"></multiple-select>
-                                    <div class="error-msg" ng-show="cityform.country.$invalid">Please Enter Country</div>
+                                    <div class="error-msg" ng-show="mustDoForm.country.$invalid">Please Enter Country</div>
                                 </div>
                                 <div class="form-group ui-select">
-                                    <label>City*</label>
+                                    <label>Name*</label>
                                     <input type="text" name="name" ng-model="formData.name" class="form-control" required>
-                                    <div class="error-msg" ng-show="cityform.name.$invalid && cityform.name.$touched">Please Enter City</div>
+                                    <div class="error-msg" ng-show="mustDoForm.name.$invalid && mustDoForm.name.$touched">Please Enter Must-Do Name</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
                                     <textarea name="Description" ng-model="formData.description" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>Best Month</label>
-                                    <input type="text" ng-model="formData.bestMonth" class="form-control">
+                                    <label>Upload Main Photo</label>
+                                    <upload-image ng-model="formData.mainPhoto"></upload-image>
                                 </div>
                                 <div class="form-group">
-                                    <label>Best Weather</label>
-                                    <input type="text" ng-model="formData.bestWeather" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Best Season</label>
-                                    <input type="text" ng-model="formData.bestSeason" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Cover Photo</label>
-                                    <upload-image ng-model="formData.cityCoverPhoto"></upload-image>
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Display Photo</label>
-                                    <upload-image ng-model="formData.cityDisplayPhoto"></upload-image>
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Itinerary Banner</label>
-                                    <upload-image ng-model="formData.countryItineraryBanner"></upload-image>
+                                    <label>Upload Image Credit</label>
+                                    <upload-image ng-model="formData.imageCredit"></upload-image>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt20 odd-even-button">
-                            <button class="btn btn-default" type="submit" ng-click="saveCity(formData)" ng-disabled="cityform.$invalid">Save</button>
+                            <button class="btn btn-default" type="submit" ng-click="saveMustDo(formData)" ng-disabled="mustDoForm.$invalid">Save</button>
                             <button class="btn btn-default" ui-sref="city-list">Cancel</button>
                         </div>
                 </div>

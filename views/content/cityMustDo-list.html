@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-4 column">
             <div class="heading-profile">
-                <h2>Country Must Do List</h2>
+                <h2>City Must Do List</h2>
             </div>
         </div>
     </div>
@@ -18,14 +18,14 @@
                 <div class="table-area">
                     <div class="widget-title">
                         <div class="col-md-4">
-                            <h3 style="margin:0;">List of Country Must-Dos <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                            <h3 style="margin:0;">List of City Must-Do <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <ui-select ng-model="search.country._id" title="Select Country" on-select="callSelect($select.selected)">
-                                    <ui-select-match placeholder="Select Country">{{$select.selected.name}}</ui-select-match>
-                                    <ui-select-choices repeat="country in countries | filter: $select.search">
-                                        <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                <ui-select ng-model="search.city._id" title="Select City" on-select="callSelect($select.selected)">
+                                    <ui-select-match placeholder="Select City">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="city in cities | filter: $select.search">
+                                        <div ng-bind-html="city.name | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
@@ -35,7 +35,7 @@
                                 <form class="search-form mr-form">
                                     <input type="text" ng-change="showAllMustDos(true)" placeholder="Search Here..." ng-model="search.keyword" />
                                 </form>
-                                <a class="btn btn-primary" ui-sref="createCountryMustDo">Add New</a>
+                                <a class="btn btn-primary" ui-sref="createCityMustDo">Add New</a>
                             </div>
                         </div>
                     </div>
@@ -47,6 +47,7 @@
                                         #
                                     </th>
                                     <th>Must Do Name</th>
+                                    <th>City</th>
                                     <th>Country</th>
                                     <th>Actions</th>
                                 </tr>
@@ -55,12 +56,13 @@
                                 <tr ng-repeat="mustDo in mustDos">
                                     <td>{{($index + 1)+((currentPage-1)*maxRow)}}</td>
                                     <td>{{mustDo.name}}</td>
-                                    <td>{{mustDo.country.name}}</td>
+                                    <td>{{mustDo.city.name}}</td>
+                                    <td>{{mustDo.city.country.name}}</td>
                                     <td>
-                                        <a class="btn btn-primary" ui-sref="editCountryMustDo({id:mustDo._id})">
+                                        <a class="btn btn-primary" ui-sref="editCityMustDo({id:mustDo._id})">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a class="btn btn-danger" ng-click="deleteCountryMustDo(mustDo._id)">
+                                        <a class="btn btn-danger" ng-click="deleteCityMustDo(mustDo._id)">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
