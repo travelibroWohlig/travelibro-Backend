@@ -1,4 +1,4 @@
-var adminurl = "http://localhost/api/";
+var adminurl = "http://localhost:8090/api/";
 // var adminurl = "http://104.155.238.145/api/";
 var imgurl = adminurl + "upload/";
 
@@ -165,6 +165,11 @@ var navigationservice = angular.module('navigationservice', [])
         deleteCityMustDo: function(id, callback) {
             $http.post(adminurl + 'mustdocity/delete', {
                 _id: id
+            }).success(callback);
+        },
+        getCityList: function(search, callback) {
+            $http.post(adminurl + 'city/getSearch', {
+                search: search
             }).success(callback);
         },
     };

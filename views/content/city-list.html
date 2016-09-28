@@ -27,16 +27,32 @@
             <div class="widget">
                 <div class="table-area">
                     <div class="widget-title">
-                        <div class="pull-right">
-                            <form class="search-form mr-form">
-                                <input type="text" ng-change="showAllCountries(true)" placeholder="Search Here..." ng-model="search.keyword" />
-                                <button type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </form>
-                            <a class="btn btn-primary" ui-sref="createcity">Add New</a>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>List of Cities <span class="tableTotal">(Total : {{totalItems}}) </span></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <ui-select ng-model="search.country._id" title="Select Country" on-select="callSelect($select.selected)">
+                                        <ui-select-match placeholder="Select Country">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="country in countries | filter: $select.search">
+                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="pull-right">
+                                    <form class="search-form mr-form">
+                                        <input type="text" ng-change="showAllCities(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                        <button type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </form>
+                                    <a class="btn btn-primary" ui-sref="createcity">Add New</a>
+                                </div>
+                            </div>
                         </div>
-                        <h3>List of Cities <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
                     </div>
                     <div class="table-responsive" ng-show="totalItems>0">
                         <table class="table">

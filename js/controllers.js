@@ -271,20 +271,35 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.currentPage = $stateParams.page;
     var i = 0;
     $scope.search = {
-        keyword: ""
+        keyword: "",
+        countryId: ""
     };
     if ($stateParams.keyword) {
         $scope.search.keyword = $stateParams.keyword;
     }
-    $scope.showAllCountries = function(keywordChange) {
+    $scope.countries = [];
+    NavigationService.getAllCountries(function(data) {
+        $scope.countries = data.data;
+        $scope.countries.unshift({ _id: "", name: "Select Country" });
+    });
+    $scope.callSelect = function(value) {
+        $scope.search.countryId = value._id;
+        $scope.showAllCities();
+    }
+    $scope.showAllCities = function(keywordChange) {
         $scope.totalItems = undefined;
         if (keywordChange) {
             $scope.currentPage = 1;
         }
-        NavigationService.searchCity({
+        var filters = {
+            filter: { country: $scope.search.countryId },
             page: $scope.currentPage,
             keyword: $scope.search.keyword
-        }, ++i, function(data, ini) {
+        };
+        if ($scope.search.countryId === "") {
+            filters.filter = {};
+        }
+        NavigationService.searchCity(filters, ++i, function(data, ini) {
             console.log(data.data);
             if (ini == i) {
                 console.log(data.data);
@@ -306,7 +321,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             keyword: $scope.search.keyword
         });
     };
-    $scope.showAllCountries();
+    $scope.showAllCities();
 
     $scope.deleteCity = function(id) {
         globalfunction.confDel(function(value) {
@@ -314,7 +329,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             if (value) {
                 NavigationService.deleteCity(id, function(data) {
                     if (data.value) {
-                        $scope.showAllCountries();
+                        $scope.showAllCities();
                         toastr.success("City deleted successfully.", "City deleted");
                     } else {
                         toastr.error("There was an error while deleting City", "City deleting error");
@@ -386,23 +401,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     var i = 0;
     $scope.search = {
         keyword: "",
-        countryId: ""
+        cityId: ""
     };
     if ($stateParams.keyword) {
         $scope.search.keyword = $stateParams.keyword;
     }
     $scope.cities = [];
-    NavigationService.getAllCities(function(data) {
-        $scope.cities = data.data;
-        $scope.cities.unshift({ _id: "", name: "Select City" });
-    });
     $scope.showAllMustDo = function(keywordChange) {
         $scope.totalItems = undefined;
         if (keywordChange) {
             $scope.currentPage = 1;
         }
         var filters = {
-            filter: { country: $scope.search.countryId, city: $scope.search.cityId },
+            filter: { city: $scope.search.cityId },
             page: $scope.currentPage,
             keyword: $scope.search.keyword
         };
@@ -422,10 +433,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.callSelect = function(value) {
-        console.log(value);
-        // $scope.search.cityId = value._id;
-        // $scope.search.cityId = value._id;
-        // $scope.showAllMustDo();
+        $scope.search.cityId = value._id;
+        $scope.showAllMustDo();
+    }
+    $scope.getCity = function(value) {
+        $scope.search.city = value;
+        NavigationService.getCityList($scope.search.city, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
     }
     $scope.changePage = function(page) {
         var goTo = "cityMustDo-list";
@@ -458,20 +476,32 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 .controller('CreateCityMustDoCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr) {
     //Used to name the .html file
 
-    $scope.template = TemplateService.changecontent("countryMustDo-detail");
-    $scope.menutitle = NavigationService.makeactive("Must-Do Country");
+    $scope.template = TemplateService.changecontent("cityMustDo-detail");
+    $scope.menutitle = NavigationService.makeactive("Must-Do City");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
     $scope.header = {
-        "name": "Create Must-Do Country"
+        "name": "Create Must-Do City"
     };
+    $scope.getCity = function(value) {
+        NavigationService.getCityList(value, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
+    $scope.variable = "";
+    $scope.callSelect = function(value) {
+        $scope.formData.city = value._id;
+        $scope.variable = value.name;
+    }
     $scope.formData = {};
     $scope.saveMustDo = function(formData) {
-        console.log($scope.formData);
-        NavigationService.countryMustDoSave($scope.formData, function(data) {
+        NavigationService.cityMustDoSave($scope.formData, function(data) {
             if (data.value === true) {
-                $state.go('countryMustDo-list');
+                $state.go('cityMustDo-list');
                 toastr.success("Must Do " + $scope.formData.name + " created successfully.", "Must Do Created");
             } else {
                 toastr.error("Must Do creation failed.", "Must Do creation error");
@@ -483,26 +513,40 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 .controller('EditCityMustDoCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
     //Used to name the .html file
 
-    $scope.template = TemplateService.changecontent("countryMustDo-detail");
-    $scope.menutitle = NavigationService.makeactive("Must-Do Country");
+    $scope.template = TemplateService.changecontent("cityMustDo-detail");
+    $scope.menutitle = NavigationService.makeactive("Must-Do City");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
     $scope.header = {
-        "name": "Edit Must-Do Country"
+        "name": "Edit Must-Do City"
     };
+    $scope.getCity = function(value) {
+        NavigationService.getCityList(value, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
 
-    NavigationService.getOneCountryMustDo($stateParams.id, function(data) {
+    $scope.variable = "";
+    NavigationService.getOneCityMustDo($stateParams.id, function(data) {
         $scope.formData = data.data;
+        $scope.variable = data.data.city.name;
     });
-
-    $scope.saveMustDo = function(formValid) {
-        NavigationService.countryMustDoEdit($scope.formData, function(data) {
+    $scope.callSelect = function(value) {
+        $scope.formData.city = value._id;
+        $scope.variable = value.name;
+    }
+    $scope.formData = {};
+    $scope.saveMustDo = function(formData) {
+        NavigationService.cityMustDoSave($scope.formData, function(data) {
             if (data.value === true) {
-                $state.go('countryMustDo-list');
+                $state.go('cityMustDo-list');
                 toastr.success("Must Do " + $scope.formData.name + " created successfully.", "Must Do Created");
             } else {
-                toastr.error("Must Do edition failed.", "Must Do edition error");
+                toastr.error("Must Do creation failed.", "Must Do creation error");
             }
         });
     };
@@ -826,7 +870,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 .controller('languageCtrl', function($scope, TemplateService, $translate, $rootScope) {
 
     $scope.changeLanguage = function() {
-        console.log("Language CLicked");
+        console.log("Language Clicked");
 
         if (!$.jStorage.get("language")) {
             $translate.use("hi");
