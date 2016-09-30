@@ -199,9 +199,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 NavigationService.deleteCountryMustDo(id, function(data) {
                     if (data.value) {
                         $scope.showAllMustDo();
-                        toastr.success("Country deleted successfully.", "Country deleted");
+                        toastr.success("Must-Do deleted successfully.", "Must-Do deleted");
                     } else {
-                        toastr.error("There was an error while deleting country", "Country deleting error");
+                        toastr.error("There was an error while deleting country", "Must-Do deleting error");
                     }
                 });
             }
@@ -226,9 +226,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.countryMustDoSave($scope.formData, function(data) {
             if (data.value === true) {
                 $state.go('countryMustDo-list');
-                toastr.success("Must Do " + $scope.formData.name + " created successfully.", "Must Do Created");
+                toastr.success("Must-Do " + $scope.formData.name + " created successfully.", "Must-Do Created");
             } else {
-                toastr.error("Must Do creation failed.", "Must Do creation error");
+                toastr.error("Must-Do creation failed.", "Must-Do creation error");
             }
         });
     };
@@ -254,9 +254,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.countryMustDoEdit($scope.formData, function(data) {
             if (data.value === true) {
                 $state.go('countryMustDo-list');
-                toastr.success("Must Do " + $scope.formData.name + " created successfully.", "Must Do Created");
+                toastr.success("Must-Do " + $scope.formData.name + " created successfully.", "Must-Do Created");
             } else {
-                toastr.error("Must Do edition failed.", "Must Do edition error");
+                toastr.error("Must-Do edition failed.", "Must-Do edition error");
             }
         });
     };
@@ -477,7 +477,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     //Used to name the .html file
 
     $scope.template = TemplateService.changecontent("cityMustDo-detail");
-    $scope.menutitle = NavigationService.makeactive("Must-Do City");
+    $scope.menutitle = NavigationService.makeactive("City Must-Do");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
@@ -502,9 +502,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.cityMustDoSave($scope.formData, function(data) {
             if (data.value === true) {
                 $state.go('cityMustDo-list');
-                toastr.success("Must Do " + $scope.formData.name + " created successfully.", "Must Do Created");
+                toastr.success("Must-Do " + $scope.formData.name + " created successfully.", "Must-Do Created");
             } else {
-                toastr.error("Must Do creation failed.", "Must Do creation error");
+                toastr.error("Must-Do creation failed.", "Must-Do creation error");
             }
         });
     };
@@ -514,12 +514,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     //Used to name the .html file
 
     $scope.template = TemplateService.changecontent("cityMustDo-detail");
-    $scope.menutitle = NavigationService.makeactive("Must-Do City");
+    $scope.menutitle = NavigationService.makeactive("City Must-Do");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
     $scope.header = {
-        "name": "Edit Must-Do City"
+        "name": "Edit City Must-Do"
     };
     $scope.getCity = function(value) {
         NavigationService.getCityList(value, function(data) {
@@ -544,9 +544,333 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.cityMustDoSave($scope.formData, function(data) {
             if (data.value === true) {
                 $state.go('cityMustDo-list');
-                toastr.success("Must Do " + $scope.formData.name + " created successfully.", "Must Do Created");
+                toastr.success("Must-Do " + $scope.formData.name + " created successfully.", "Must-Do Created");
             } else {
-                toastr.error("Must Do creation failed.", "Must Do creation error");
+                toastr.error("Must-Do creation failed.", "Must-Do creation error");
+            }
+        });
+    };
+})
+
+.controller('CityHotelCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("cityHotel-list");
+    $scope.menutitle = NavigationService.makeactive("City Hotel");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.currentPage = $stateParams.page;
+    var i = 0;
+    $scope.search = {
+        keyword: "",
+        cityId: ""
+    };
+    if ($stateParams.keyword) {
+        $scope.search.keyword = $stateParams.keyword;
+    }
+    $scope.cities = [];
+    $scope.showAllHotel = function(keywordChange) {
+        $scope.totalItems = undefined;
+        if (keywordChange) {
+            $scope.currentPage = 1;
+        }
+        var filters = {
+            filter: { city: $scope.search.cityId },
+            page: $scope.currentPage,
+            keyword: $scope.search.keyword
+        };
+        if ($scope.search.cityId === "") {
+            filters.filter = {};
+        }
+        NavigationService.searchCityHotel(filters, ++i, function(data, ini) {
+            if (ini == i) {
+                if (data.value === true) {
+                    $scope.hotels = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                } else {
+                    $scope.totalItems = 0;
+                }
+            }
+        });
+    };
+    $scope.callSelect = function(value) {
+        $scope.search.cityId = value._id;
+        $scope.showAllHotel();
+    }
+    $scope.getCity = function(value) {
+        $scope.search.city = value;
+        NavigationService.getCityList($scope.search.city, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
+    $scope.changePage = function(page) {
+        var goTo = "cityHotel-list";
+        if ($scope.search.keyword) {
+            goTo = "cityHotel-list";
+        }
+        $state.go(goTo, {
+            page: page,
+            keyword: $scope.search.keyword
+        });
+    };
+    $scope.showAllHotel();
+    $scope.deleteCityHotel = function(id) {
+        globalfunction.confDel(function(value) {
+            console.log(value);
+            if (value) {
+                NavigationService.deleteCityHotel(id, function(data) {
+                    if (data.value) {
+                        $scope.showAllHotel();
+                        toastr.success("Hotel deleted successfully.", "Hotel deleted");
+                    } else {
+                        toastr.error("There was an error while deleting hotel", "Hotel deleting error");
+                    }
+                });
+            }
+        });
+    };
+})
+
+.controller('CreateCityHotelCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr) {
+    //Used to name the .html file
+
+    $scope.template = TemplateService.changecontent("cityHotel-detail");
+    $scope.menutitle = NavigationService.makeactive("City Hotel");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    $scope.header = {
+        "name": "Create City Hotel"
+    };
+    $scope.getCity = function(value) {
+        NavigationService.getCityList(value, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
+    $scope.values = [{ value: "", name: "Select Status" }, { value: false, name: "Not Closed" }, { value: true, name: "Closed" }];
+    $scope.variable = "";
+    $scope.callSelect = function(value) {
+        $scope.formData.city = value._id;
+        $scope.variable = value.name;
+    }
+    $scope.formData = {};
+    $scope.saveHotel = function(formData) {
+        NavigationService.cityHotelSave($scope.formData, function(data) {
+            if (data.value === true) {
+                $state.go('cityHotel-list');
+                toastr.success("Hotel " + $scope.formData.name + " created successfully.", "Hotel Created");
+            } else {
+                toastr.error("Hotel creation failed.", "Hotel creation error");
+            }
+        });
+    };
+})
+
+.controller('EditCityHotelCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    //Used to name the .html file
+
+    $scope.template = TemplateService.changecontent("cityHotel-detail");
+    $scope.menutitle = NavigationService.makeactive("City Hotel");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    $scope.header = {
+        "name": "Edit Hotel City"
+    };
+    $scope.getCity = function(value) {
+        NavigationService.getCityList(value, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
+    $scope.values = [{ value: "", name: "Select Status" }, { value: false, name: "Not Closed" }, { value: true, name: "Closed" }];
+    $scope.variable = "";
+    NavigationService.getOneCityHotel($stateParams.id, function(data) {
+        $scope.formData = data.data;
+        $scope.variable = data.data.city.name;
+    });
+    $scope.callSelect = function(value) {
+        $scope.formData.city = value._id;
+        $scope.variable = value.name;
+    }
+    $scope.formData = {};
+    $scope.saveHotel = function(formData) {
+        NavigationService.cityHotelSave($scope.formData, function(data) {
+            if (data.value === true) {
+                $state.go('cityHotel-list');
+                toastr.success("Hotel " + $scope.formData.name + " created successfully.", "Hotel Created");
+            } else {
+                toastr.error("Hotel creation failed.", "Hotel creation error");
+            }
+        });
+    };
+})
+
+.controller('CityRestaurantCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("cityRestaurant-list");
+    $scope.menutitle = NavigationService.makeactive("City Restaurant");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.currentPage = $stateParams.page;
+    var i = 0;
+    $scope.search = {
+        keyword: "",
+        cityId: ""
+    };
+    if ($stateParams.keyword) {
+        $scope.search.keyword = $stateParams.keyword;
+    }
+    $scope.cities = [];
+    $scope.showAllRestaurant = function(keywordChange) {
+        $scope.totalItems = undefined;
+        if (keywordChange) {
+            $scope.currentPage = 1;
+        }
+        var filters = {
+            filter: { city: $scope.search.cityId },
+            page: $scope.currentPage,
+            keyword: $scope.search.keyword
+        };
+        if ($scope.search.cityId === "") {
+            filters.filter = {};
+        }
+        NavigationService.searchCityRestaurant(filters, ++i, function(data, ini) {
+            if (ini == i) {
+                if (data.value === true) {
+                    $scope.restaurants = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                } else {
+                    $scope.totalItems = 0;
+                }
+            }
+        });
+    };
+    $scope.callSelect = function(value) {
+        $scope.search.cityId = value._id;
+        $scope.showAllRestaurant();
+    }
+    $scope.getCity = function(value) {
+        $scope.search.city = value;
+        NavigationService.getCityList($scope.search.city, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
+    $scope.changePage = function(page) {
+        var goTo = "cityRestaurant-list";
+        if ($scope.search.keyword) {
+            goTo = "cityRestaurant-list";
+        }
+        $state.go(goTo, {
+            page: page,
+            keyword: $scope.search.keyword
+        });
+    };
+    $scope.showAllRestaurant();
+    $scope.deleteCityRestaurant = function(id) {
+        globalfunction.confDel(function(value) {
+            console.log(value);
+            if (value) {
+                NavigationService.deleteCityRestaurant(id, function(data) {
+                    if (data.value) {
+                        $scope.showAllRestaurant();
+                        toastr.success("Restaurant deleted successfully.", "Restaurant deleted");
+                    } else {
+                        toastr.error("There was an error while deleting restaurants", "Restaurant deleting error");
+                    }
+                });
+            }
+        });
+    };
+})
+
+.controller('CreateCityRestaurantCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr) {
+    //Used to name the .html file
+
+    $scope.template = TemplateService.changecontent("cityRestaurant-detail");
+    $scope.menutitle = NavigationService.makeactive("City Restaurant");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    $scope.header = {
+        "name": "Create City Restaurant"
+    };
+    $scope.getCity = function(value) {
+        NavigationService.getCityList(value, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
+    $scope.values = [{ value: "", name: "Select Status" }, { value: false, name: "Not Closed" }, { value: true, name: "Closed" }];
+    $scope.variable = "";
+    $scope.callSelect = function(value) {
+        $scope.formData.city = value._id;
+        $scope.variable = value.name;
+    }
+    $scope.formData = {};
+    $scope.saveRestaurant = function(formData) {
+        NavigationService.cityRestaurantSave($scope.formData, function(data) {
+            if (data.value === true) {
+                $state.go('cityRestaurant-list');
+                toastr.success("Restaurant " + $scope.formData.name + " created successfully.", "Restaurant Created");
+            } else {
+                toastr.error("Restaurant creation failed.", "Restaurant creation error");
+            }
+        });
+    };
+})
+
+.controller('EditCityRestaurantCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    //Used to name the .html file
+
+    $scope.template = TemplateService.changecontent("cityRestaurant-detail");
+    $scope.menutitle = NavigationService.makeactive("City Restaurant");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    $scope.header = {
+        "name": "Edit Restaurant City"
+    };
+    $scope.getCity = function(value) {
+        NavigationService.getCityList(value, function(data) {
+            if (data.value) {
+                $scope.cities = data.data;
+                $scope.cities.unshift({ _id: "", name: "Search City" });
+            }
+        });
+    }
+    $scope.values = [{ value: "", name: "Select Status" }, { value: false, name: "Not Closed" }, { value: true, name: "Closed" }];
+    $scope.variable = "";
+    NavigationService.getOneCityRestaurant($stateParams.id, function(data) {
+        $scope.formData = data.data;
+        $scope.variable = data.data.city.name;
+    });
+    $scope.callSelect = function(value) {
+        $scope.formData.city = value._id;
+        $scope.variable = value.name;
+    }
+    $scope.formData = {};
+    $scope.saveRestaurant = function(formData) {
+        NavigationService.cityRestaurantSave($scope.formData, function(data) {
+            if (data.value === true) {
+                $state.go('cityRestaurant-list');
+                toastr.success("Restaurant " + $scope.formData.name + " created successfully.", "Restaurant Created");
+            } else {
+                toastr.error("Restaurant creation failed.", "Restaurant creation error");
             }
         });
     };

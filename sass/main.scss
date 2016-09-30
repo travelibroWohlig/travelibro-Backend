@@ -877,8 +877,14 @@ img.uploadingImage {
 .admin-details{
     padding:0px;
 }
-
-
+body{
+    background: url(../img/login-bg.jpg) no-repeat;
+   background-size: cover;
+   background-attachment: fixed;
+}
+.bg-white {
+    background-color: #fff;
+}
 /* Start writing sass here */
 
 @import "fancybox-override";

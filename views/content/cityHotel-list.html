@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-4 column">
             <div class="heading-profile">
-                <h2>City Must Do List</h2>
+                <h2>City Hotel List</h2>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
                     <div class="widget-title">
                         <div class="row">
                             <div class="col-md-4">
-                                <h4>List of City Must Do <span class="tableTotal">(Total : {{totalItems}}) </span></h4>
+                                <h4>List of City Hotels <span class="tableTotal">(Total : {{totalItems}}) </span></h4>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -37,9 +37,9 @@
                             <div class="col-md-5">
                                 <div class="pull-right">
                                     <form class="search-form mr-form">
-                                        <input type="text" ng-change="showAllMustDo(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                        <input type="text" ng-change="showAllHotel(true)" placeholder="Search Here..." ng-model="search.keyword" />
                                     </form>
-                                    <a class="btn btn-primary" ui-sref="createCityMustDo">Add New</a>
+                                    <a class="btn btn-primary" ui-sref="createCityHotel">Add New</a>
                                 </div>
                             </div>
                         </div>
@@ -51,23 +51,23 @@
                                     <th>
                                         #
                                     </th>
-                                    <th>Must Do Name</th>
+                                    <th>Hotel Name</th>
                                     <th>City</th>
                                     <th>Country</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="mustDo in mustDos">
+                                <tr ng-repeat="hotel in hotels">
                                     <td>{{($index + 1)+((currentPage-1)*maxRow)}}</td>
-                                    <td>{{mustDo.name}}</td>
-                                    <td>{{mustDo.city.name}}</td>
-                                    <td>{{mustDo.city.country.name}}</td>
+                                    <td>{{hotel.name}}</td>
+                                    <td>{{hotel.city.name}}</td>
+                                    <td>{{hotel.city.country.name}}</td>
                                     <td>
-                                        <a class="btn btn-primary" ui-sref="editCityMustDo({id:mustDo._id})">
+                                        <a class="btn btn-primary" ui-sref="editCityHotel({id:hotel._id})">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a class="btn btn-danger" ng-click="deleteCityMustDo(mustDo._id)">
+                                        <a class="btn btn-danger" ng-click="deleteCityHotel(hotel._id)">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>

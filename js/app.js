@@ -116,6 +116,50 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
         controller: 'EditCityMustDoCtrl'
     })
 
+    .state('cityHotel-list', {
+        url: "/cityHotel-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CityHotelCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createCityHotel', {
+        url: "/cityHotel-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateCityHotelCtrl'
+    })
+
+    .state('editCityHotel', {
+        url: "/cityHotel-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCityHotelCtrl'
+    })
+
+    .state('cityRestaurant-list', {
+        url: "/cityRestaurant-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CityRestaurantCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createCityRestaurant', {
+        url: "/cityRestaurant-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateCityRestaurantCtrl'
+    })
+
+    .state('editCityRestaurant', {
+        url: "/cityRestaurant-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCityRestaurantCtrl'
+    })
+
     ;
     $urlRouterProvider.otherwise("/login");
     $locationProvider.html5Mode(isproduction);

@@ -48,14 +48,14 @@
                                     <upload-image ng-model="formData.mainPhoto"></upload-image>
                                 </div>
                                 <div class="form-group">
-                                    <label>Upload Image Credit</label>
-                                    <upload-image ng-model="formData.imageCredit"></upload-image>
+                                    <label>Image Credit</label>
+                                    <input type="text" name="credit" ng-model="formData.imageCredit" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt20 odd-even-button">
                             <button class="btn btn-default" type="submit" ng-click="saveMustDo(formData)" ng-disabled="mustDoForm.$invalid">Save</button>
-                            <button class="btn btn-default" ui-sref="city-list">Cancel</button>
+                            <button class="btn btn-default" ui-sref="countryMustDo-list">Cancel</button>
                         </div>
                 </div>
             </div>

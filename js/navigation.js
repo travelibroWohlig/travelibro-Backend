@@ -25,7 +25,7 @@ var navigationservice = angular.module('navigationservice', [])
             icon: "globe"
         }]
     }, {
-        name: "City-List",
+        name: "City",
         classis: "active",
         anchor: "city",
         icon: "puzzle-piece",
@@ -38,6 +38,16 @@ var navigationservice = angular.module('navigationservice', [])
             name: "City Must-Do",
             classis: "active",
             anchor: "cityMustDo-list",
+            icon: "globe"
+        }, {
+            name: "City Hotel",
+            classis: "active",
+            anchor: "cityHotel-list",
+            icon: "globe"
+        },{
+            name: "City Restaurant",
+            classis: "active",
+            anchor: "cityRestaurant-list",
             icon: "globe"
         }]
     }];
@@ -146,6 +156,12 @@ var navigationservice = angular.module('navigationservice', [])
         getAllCities: function(callback) {
             $http.post(adminurl + 'city/getAll', {}).success(callback);
         },
+
+        getCityList: function(search, callback) {
+            $http.post(adminurl + 'city/getSearch', {
+                search: search
+            }).success(callback);
+        },
         searchCityMustDo: function(formData, i, callback) {
             $http.post(adminurl + 'mustdocity/search', formData).success(function(data) {
                 callback(data, i);
@@ -167,9 +183,46 @@ var navigationservice = angular.module('navigationservice', [])
                 _id: id
             }).success(callback);
         },
-        getCityList: function(search, callback) {
-            $http.post(adminurl + 'city/getSearch', {
-                search: search
+        searchCityHotel: function(formData, i, callback) {
+            $http.post(adminurl + 'hotel/search', formData).success(function(data) {
+                callback(data, i);
+            });
+        },
+        cityHotelSave: function(formData, callback) {
+            $http.post(adminurl + 'hotel/save', formData).success(callback);
+        },
+        getOneCityHotel: function(id, callback) {
+            $http.post(adminurl + 'hotel/getOne', {
+                _id: id
+            }).success(callback);
+        },
+        cityHotelEdit: function(formData, callback) {
+            $http.post(adminurl + 'hotel/save', formData).success(callback);
+        },
+        deleteCityHotel: function(id, callback) {
+            $http.post(adminurl + 'hotel/delete', {
+                _id: id
+            }).success(callback);
+        },
+        searchCityRestaurant: function(formData, i, callback) {
+            $http.post(adminurl + 'restaurant/search', formData).success(function(data) {
+                callback(data, i);
+            });
+        },
+        cityRestaurantSave: function(formData, callback) {
+            $http.post(adminurl + 'restaurant/save', formData).success(callback);
+        },
+        getOneCityRestaurant: function(id, callback) {
+            $http.post(adminurl + 'restaurant/getOne', {
+                _id: id
+            }).success(callback);
+        },
+        cityRestaurantEdit: function(formData, callback) {
+            $http.post(adminurl + 'restaurant/save', formData).success(callback);
+        },
+        deleteCityRestaurant: function(id, callback) {
+            $http.post(adminurl + 'restaurant/delete', {
+                _id: id
             }).success(callback);
         },
     };

@@ -24,9 +24,9 @@
             <div class="widget">
                 <div class="form-elements-sec">
                     <div class="widget-title">
-                        <h3>City</h3>
+                        <h3>City Hotel</h3>
                     </div>
-                    <form name="mustDoForm" role="form" class="sec ng-pristine ng-valid">
+                    <form name="hotelForm" role="form" class="sec ng-pristine ng-valid">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -43,25 +43,37 @@
                                 <div class="form-group ui-select">
                                     <label>Name*</label>
                                     <input type="text" name="name" ng-model="formData.name" class="form-control" required>
-                                    <div class="error-msg" ng-show="mustDoForm.name.$invalid && mustDoForm.name.$touched">Please Enter Must-Do Name</div>
+                                    <div class="error-msg" ng-show="hotelForm.name.$invalid && hotelForm.name.$touched">Please Enter Must-Do Name</div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="Description" ng-model="formData.description" class="form-control"></textarea>
+                                    <label>Link</label>
+                                    <input type="text" name="link" ng-model="formData.link" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>Upload Main Photo</label>
-                                    <upload-image ng-model="formData.mainPhoto"></upload-image>
+                                    <label>Budget</label>
+                                    <input type="text" name="budget" ng-model="formData.budget" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>Upload Image Credit</label>
-                                    <upload-image ng-model="formData.imageCredit"></upload-image>
+                                    <label>Category Type</label>
+                                    <input type="text" name="category" ng-model="formData.category" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Star Rating</label>
+                                    <input type="text" name="starRating" ng-model="formData.starRating" class="form-control" only-digits>
+                                </div>
+                                <div class="form-group">
+                                    <label>User Rating</label>
+                                    <input type="text" name="userRating" ng-model="formData.userRating" class="form-control" only-digits>
+                                </div>
+                                <div class="form-group">
+                                    <label>Report Closed</label>
+                                    <select name="report" ng-model="formData.status" ng-options="item.value as item.name for item in values" class="form-control"></select>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt20 odd-even-button">
-                            <button class="btn btn-default" type="submit" ng-click="saveMustDo(formData)" ng-disabled="mustDoForm.$invalid">Save</button>
-                            <button class="btn btn-default" ui-sref="cityMustDo-list">Cancel</button>
+                            <button class="btn btn-default" type="submit" ng-click="saveHotel(formData)" ng-disabled="hotelForm.$invalid">Save</button>
+                            <button class="btn btn-default" ui-sref="cityHotel-list">Cancel</button>
                         </div>
                 </div>
             </div>
