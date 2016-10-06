@@ -290,6 +290,33 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         "name": "Create City"
     };
     $scope.formData = {};
+    $scope.addMustDo = function() {
+        if ($scope.formData.mustDo && $scope.formData.mustDo.length > 0) {
+            $scope.formData.mustDo.push({
+                sequenceNo: "",
+                name: "",
+                description: "",
+                mainPhoto: "",
+                imageCredit: ""
+            });
+        } else {
+            $scope.formData.mustDo = [];
+            $scope.formData.mustDo.push({
+                sequenceNo: "",
+                name: "",
+                description: "",
+                mainPhoto: "",
+                imageCredit: ""
+            });
+        }
+    }
+    $scope.deleteMustDo = function(index) {
+        globalfunction.confDel(function(value) {
+            if (value) {
+                var abc = _.pullAt($scope.formData.mustDo, [index]);
+            }
+        });
+    }
     $scope.saveCity = function(formData) {
         NavigationService.citySave($scope.formData, function(data) {
             if (data.value === true) {
