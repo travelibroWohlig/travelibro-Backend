@@ -9,47 +9,23 @@ var navigationservice = angular.module('navigationservice', [])
 
 .factory('NavigationService', function($http) {
     var navigation = [{
+        name: "Dashboard",
+        classis: "active",
+        anchor: "dashboard",
+        icon: "globe",
+        subnav: []
+    }, {
         name: "Country",
         classis: "active",
-        anchor: "country",
+        anchor: "country-list",
         icon: "globe",
-        subnav: [{
-            name: "Country-List",
-            classis: "active",
-            anchor: "country-list",
-            icon: "globe"
-        }, {
-            name: "Country Must-Do",
-            classis: "active",
-            anchor: "countryMustDo-list",
-            icon: "globe"
-        }]
+        subnav: []
     }, {
         name: "City",
         classis: "active",
-        anchor: "city",
+        anchor: "city-list",
         icon: "puzzle-piece",
-        subnav: [{
-            name: "City-List",
-            classis: "active",
-            anchor: "city-list",
-            icon: "puzzle-piece"
-        }, {
-            name: "City Must-Do",
-            classis: "active",
-            anchor: "cityMustDo-list",
-            icon: "globe"
-        }, {
-            name: "City Hotel",
-            classis: "active",
-            anchor: "cityHotel-list",
-            icon: "globe"
-        },{
-            name: "City Restaurant",
-            classis: "active",
-            anchor: "cityRestaurant-list",
-            icon: "globe"
-        }]
+        subnav: []
     }];
     var membershipLevel = [{
         name: "Student",
@@ -76,13 +52,16 @@ var navigationservice = angular.module('navigationservice', [])
             }
             return menuname;
         },
+        dashboardCount: function(data, callback) {
+            $http.post(adminurl + 'config/dashboardCount', data).success(callback);
+        },
         searchCountry: function(formData, i, callback) {
             $http.post(adminurl + 'country/search', formData).success(function(data) {
                 callback(data, i);
             });
         },
         countrySave: function(formData, callback) {
-            $http.post(adminurl + 'country/save', formData).success(callback);
+            $http.post(adminurl + 'country/saveForBackend', formData).success(callback);
         },
         getOneCountry: function(id, callback) {
             $http.post(adminurl + 'country/getOne', {
@@ -90,7 +69,7 @@ var navigationservice = angular.module('navigationservice', [])
             }).success(callback);
         },
         countryEditSave: function(formData, callback) {
-            $http.post(adminurl + 'country/save', formData).success(callback);
+            $http.post(adminurl + 'country/editForBackend', formData).success(callback);
         },
         deleteCountry: function(id, callback) {
             $http.post(adminurl + 'country/delete', {
@@ -128,7 +107,7 @@ var navigationservice = angular.module('navigationservice', [])
             });
         },
         citySave: function(formData, callback) {
-            $http.post(adminurl + 'city/save', formData).success(callback);
+            $http.post(adminurl + 'city/saveForBackend', formData).success(callback);
         },
         getOneCity: function(id, callback) {
             // console.log('form data: ', formData);
@@ -140,88 +119,11 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback);
         },
-        cityEditSave: function(id, callback) {
-            // console.log('form data: ', formData);
-            $http({
-                url: adminurl + 'city/saveData',
-                method: 'POST',
-                data: id
-            }).success(callback);
+        cityEditSave: function(formData, callback) {
+            $http.post(adminurl + 'city/editForBackend', formData).success(callback);
         },
         deleteCity: function(id, callback) {
             $http.post(adminurl + 'city/delete', {
-                _id: id
-            }).success(callback);
-        },
-        getAllCities: function(callback) {
-            $http.post(adminurl + 'city/getAll', {}).success(callback);
-        },
-
-        getCityList: function(search, callback) {
-            $http.post(adminurl + 'city/getSearch', {
-                search: search
-            }).success(callback);
-        },
-        searchCityMustDo: function(formData, i, callback) {
-            $http.post(adminurl + 'mustdocity/search', formData).success(function(data) {
-                callback(data, i);
-            });
-        },
-        cityMustDoSave: function(formData, callback) {
-            $http.post(adminurl + 'mustdocity/save', formData).success(callback);
-        },
-        getOneCityMustDo: function(id, callback) {
-            $http.post(adminurl + 'mustdocity/getOne', {
-                _id: id
-            }).success(callback);
-        },
-        cityMustDoEdit: function(formData, callback) {
-            $http.post(adminurl + 'mustdocity/save', formData).success(callback);
-        },
-        deleteCityMustDo: function(id, callback) {
-            $http.post(adminurl + 'mustdocity/delete', {
-                _id: id
-            }).success(callback);
-        },
-        searchCityHotel: function(formData, i, callback) {
-            $http.post(adminurl + 'hotel/search', formData).success(function(data) {
-                callback(data, i);
-            });
-        },
-        cityHotelSave: function(formData, callback) {
-            $http.post(adminurl + 'hotel/save', formData).success(callback);
-        },
-        getOneCityHotel: function(id, callback) {
-            $http.post(adminurl + 'hotel/getOne', {
-                _id: id
-            }).success(callback);
-        },
-        cityHotelEdit: function(formData, callback) {
-            $http.post(adminurl + 'hotel/save', formData).success(callback);
-        },
-        deleteCityHotel: function(id, callback) {
-            $http.post(adminurl + 'hotel/delete', {
-                _id: id
-            }).success(callback);
-        },
-        searchCityRestaurant: function(formData, i, callback) {
-            $http.post(adminurl + 'restaurant/search', formData).success(function(data) {
-                callback(data, i);
-            });
-        },
-        cityRestaurantSave: function(formData, callback) {
-            $http.post(adminurl + 'restaurant/save', formData).success(callback);
-        },
-        getOneCityRestaurant: function(id, callback) {
-            $http.post(adminurl + 'restaurant/getOne', {
-                _id: id
-            }).success(callback);
-        },
-        cityRestaurantEdit: function(formData, callback) {
-            $http.post(adminurl + 'restaurant/save', formData).success(callback);
-        },
-        deleteCityRestaurant: function(id, callback) {
-            $http.post(adminurl + 'restaurant/delete', {
                 _id: id
             }).success(callback);
         },

@@ -60,7 +60,7 @@
                                     <td>{{country.name}}</td>
                                     <td>{{country.countryCode}}</td>
                                     <td>
-                                        <a class="btn btn-primary" ui-sref="editcountry({id:country._id})">
+                                        <a class="btn btn-primary" ui-sref="editcountry({id:country._id,page:currentPage,keyword:search.keyword})">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                         <a class="btn btn-danger" ng-click="deleteCountry(country._id)">

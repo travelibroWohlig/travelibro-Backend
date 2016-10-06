@@ -45,40 +45,20 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     })
 
     .state('editcountry', {
-        url: "/country-edit/:id",
+        url: "/country-edit/:id/:page/:keyword",
         templateUrl: "views/template.html",
         controller: 'EditCountryCtrl'
     })
 
-    .state('countryMustDo-list', {
-        url: "/countryMustDo-list/{page:.*}/{keyword:.*}",
-        templateUrl: "views/template.html",
-        controller: 'CountryMustDoCtrl',
-        params: {
-            page: "1",
-            keyword: ""
-        }
-    })
-
-    .state('createCountryMustDo', {
-        url: "/countryMustDo-detail",
-        templateUrl: "views/template.html",
-        controller: 'CreateCountryMustDoCtrl'
-    })
-
-    .state('editCountryMustDo', {
-        url: "/countryMustDo-edit/:id",
-        templateUrl: "views/template.html",
-        controller: 'EditCountryMustDoCtrl'
-    })
-
     .state('city-list', {
-        url: "/city-list/{page:.*}/{keyword:.*}",
+        url: "/city-list/{page:.*}/{keyword:.*}/{country:.*}/{name:.*}",
         templateUrl: "views/template.html",
         controller: 'CityCtrl',
         params: {
             page: "1",
-            keyword: ""
+            keyword: "",
+            country: "",
+            name: ""
         }
     })
 
@@ -89,76 +69,98 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     })
 
     .state('editcity', {
-        url: "/city-edit/:id",
+        url: "/city-edit/:id/:page/:keyword/:country/:name",
         templateUrl: "views/template.html",
         controller: 'EditCityCtrl'
     })
 
-    .state('cityMustDo-list', {
-        url: "/cityMustDo-list/{page:.*}/{keyword:.*}",
-        templateUrl: "views/template.html",
-        controller: 'CityMustDoCtrl',
-        params: {
-            page: "1",
-            keyword: ""
-        }
-    })
+    // .state('countryMustDo-list', {
+    //     url: "/countryMustDo-list/{page:.*}/{keyword:.*}",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CountryMustDoCtrl',
+    //     params: {
+    //         page: "1",
+    //         keyword: ""
+    //     }
+    // })
 
-    .state('createCityMustDo', {
-        url: "/cityMustDo-detail",
-        templateUrl: "views/template.html",
-        controller: 'CreateCityMustDoCtrl'
-    })
+    // .state('createCountryMustDo', {
+    //     url: "/countryMustDo-detail",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CreateCountryMustDoCtrl'
+    // })
 
-    .state('editCityMustDo', {
-        url: "/cityMustDo-edit/:id",
-        templateUrl: "views/template.html",
-        controller: 'EditCityMustDoCtrl'
-    })
+    // .state('editCountryMustDo', {
+    //     url: "/countryMustDo-edit/:id",
+    //     templateUrl: "views/template.html",
+    //     controller: 'EditCountryMustDoCtrl'
+    // })
 
-    .state('cityHotel-list', {
-        url: "/cityHotel-list/{page:.*}/{keyword:.*}",
-        templateUrl: "views/template.html",
-        controller: 'CityHotelCtrl',
-        params: {
-            page: "1",
-            keyword: ""
-        }
-    })
+    // .state('cityMustDo-list', {
+    //     url: "/cityMustDo-list/{page:.*}/{keyword:.*}",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CityMustDoCtrl',
+    //     params: {
+    //         page: "1",
+    //         keyword: ""
+    //     }
+    // })
 
-    .state('createCityHotel', {
-        url: "/cityHotel-detail",
-        templateUrl: "views/template.html",
-        controller: 'CreateCityHotelCtrl'
-    })
+    // .state('createCityMustDo', {
+    //     url: "/cityMustDo-detail",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CreateCityMustDoCtrl'
+    // })
 
-    .state('editCityHotel', {
-        url: "/cityHotel-edit/:id",
-        templateUrl: "views/template.html",
-        controller: 'EditCityHotelCtrl'
-    })
+    // .state('editCityMustDo', {
+    //     url: "/cityMustDo-edit/:id",
+    //     templateUrl: "views/template.html",
+    //     controller: 'EditCityMustDoCtrl'
+    // })
 
-    .state('cityRestaurant-list', {
-        url: "/cityRestaurant-list/{page:.*}/{keyword:.*}",
-        templateUrl: "views/template.html",
-        controller: 'CityRestaurantCtrl',
-        params: {
-            page: "1",
-            keyword: ""
-        }
-    })
+    // .state('cityHotel-list', {
+    //     url: "/cityHotel-list/{page:.*}/{keyword:.*}",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CityHotelCtrl',
+    //     params: {
+    //         page: "1",
+    //         keyword: ""
+    //     }
+    // })
 
-    .state('createCityRestaurant', {
-        url: "/cityRestaurant-detail",
-        templateUrl: "views/template.html",
-        controller: 'CreateCityRestaurantCtrl'
-    })
+    // .state('createCityHotel', {
+    //     url: "/cityHotel-detail",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CreateCityHotelCtrl'
+    // })
 
-    .state('editCityRestaurant', {
-        url: "/cityRestaurant-edit/:id",
-        templateUrl: "views/template.html",
-        controller: 'EditCityRestaurantCtrl'
-    })
+    // .state('editCityHotel', {
+    //     url: "/cityHotel-edit/:id",
+    //     templateUrl: "views/template.html",
+    //     controller: 'EditCityHotelCtrl'
+    // })
+
+    // .state('cityRestaurant-list', {
+    //     url: "/cityRestaurant-list/{page:.*}/{keyword:.*}",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CityRestaurantCtrl',
+    //     params: {
+    //         page: "1",
+    //         keyword: ""
+    //     }
+    // })
+
+    // .state('createCityRestaurant', {
+    //     url: "/cityRestaurant-detail",
+    //     templateUrl: "views/template.html",
+    //     controller: 'CreateCityRestaurantCtrl'
+    // })
+
+    // .state('editCityRestaurant', {
+    //     url: "/cityRestaurant-edit/:id",
+    //     templateUrl: "views/template.html",
+    //     controller: 'EditCityRestaurantCtrl'
+    // })
 
     ;
     $urlRouterProvider.otherwise("/login");

@@ -33,8 +33,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <ui-select ng-model="search.country._id" title="Select Country" on-select="callSelect($select.selected)">
-                                        <ui-select-match placeholder="Select Country">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select ng-model="search.name" on-select="callSelect($select.selected)">
+                                        <ui-select-match placeholder="Select Country">{{search.name}}</ui-select-match>
                                         <ui-select-choices repeat="country in countries | filter: $select.search">
                                             <div ng-bind-html="country.name | highlight: $select.search"></div>
                                         </ui-select-choices>
@@ -74,7 +74,7 @@
                                     <td>{{city.name}}</td>
                                     <td>{{city.country.name}}</td>
                                     <td>
-                                        <a class="btn btn-primary" ui-sref="editcity({id:city._id})"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-primary" ui-sref="editcity({id:city._id,page:currentPage,keyword:search.keyword,country:search.country,name:search.name})"><i class="fa fa-pencil"></i></a>
                                         <a class="btn btn-danger" ng-click="deleteCity(city._id)"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>

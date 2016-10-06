@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Country*</label>
+                                    <label>Name*</label>
                                     <input type="text" name="name" ng-model="formData.name" class="form-control" required>
                                     <div class="error-msg" ng-show="countryform.name.$invalid && countryform.name.$touched">Please Enter Country</div>
                                 </div>
@@ -78,9 +78,61 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="widget-title countryRepeat">
+                            <h3 style="margin:0">Must Dos</h3>
+                        </div>
+                        <div class="row" ng-repeat="mustDo in formData.mustDo" ng-if="formData.mustDo.length > 0">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        <a class="btn btn-danger marginDelete" ng-click="deleteMustDo($index)" title="Delete Must Do">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sequence No.</label>
+                                            <input type="text" name="mustDo.sequence" ng-model="mustDo.sequenceNo" class="form-control" only-digits>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" name="mustDo.name" ng-model="mustDo.name" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea name="Description" ng-model="mustDo.description" class="form-control"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upload Main Photo</label>
+                                            <upload-image ng-model="mustDo.mainPhoto"></upload-image>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Image Credit</label>
+                                            <input type="text" name="credit" ng-model="mustDo.imageCredit" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hrSingleWidth">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary" ng-click="addMustDo()">Add Must Do</button>
+                            </div>
+                        </div>
                         <div class="text-center mt20 odd-even-button">
                             <button class="btn btn-default" type="submit" ng-click="saveCountry(formData)" ng-disabled="countryform.$invalid">Save</button>
-                            <button class="btn btn-default" ui-sref="country-list">Cancel</button>
+                            <button class="btn btn-default" ui-sref="country-list({page:search.page,keyword:search.keyword})">Cancel</button>
                         </div>
                     </form>
                 </div>
