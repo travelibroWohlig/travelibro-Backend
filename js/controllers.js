@@ -335,7 +335,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.menutitle = NavigationService.makeactive("City");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $scope.removeArr = [];
+    $scope.removeArrMustDo = [];
     $scope.search = {
         page: $stateParams.page,
         keyword: $stateParams.keyword,
@@ -345,6 +345,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.header = {
         "name": "Edit City"
     };
+    $scope.values = [{ value: "", name: "Select Status" }, { value: false, name: "Not Closed" }, { value: true, name: "Closed" }];
     NavigationService.getOneCity($stateParams.id, function(data) {
         $scope.formData = data.data;
         $scope.formData.country = data.data.country._id;
@@ -375,7 +376,40 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             if (value) {
                 var abc = _.pullAt($scope.formData.mustDo, [index]);
                 if (abc[0]._id) {
-                    $scope.removeArr.push(abc[0]._id);
+                    $scope.removeArrMustDo.push(abc[0]._id);
+                } else {
+                    abc = {};
+                }
+            }
+        });
+    }
+    $scope.addHotel = function() {
+        if ($scope.formData.hotel && $scope.formData.hotel.length > 0) {
+            $scope.formData.hotel.push({
+                sequenceNo: "",
+                name: "",
+                description: "",
+                mainPhoto: "",
+                imageCredit: ""
+            });
+        } else {
+            $scope.formData.hotel = [];
+            $scope.formData.hotel.push({
+                sequenceNo: "",
+                name: "",
+                description: "",
+                mainPhoto: "",
+                imageCredit: ""
+            });
+        }
+    }
+    $scope.deleteHotel = function(index) {
+        globalfunction.confDel(function(value) {
+            console.log(value);
+            if (value) {
+                var abc = _.pullAt($scope.formData.hotel, [index]);
+                if (abc[0]._id) {
+                    $scope.removeArrMustDo.push(abc[0]._id);
                 } else {
                     abc = {};
                 }
@@ -383,7 +417,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     }
     $scope.saveCity = function(formValid) {
-        $scope.formData.removeArr = $scope.removeArr;
+        $scope.formData.removeArrMustDo = $scope.removeArrMustDo;
         NavigationService.cityEditSave($scope.formData, function(data) {
             if (data.value === true) {
                 $state.go('city-list', {

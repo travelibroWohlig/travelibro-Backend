@@ -121,6 +121,46 @@
                                 <button class="btn btn-primary" ng-click="addMustDo()">Add Must Do</button>
                             </div>
                         </div>
+                        <div class="widget-title countryRepeat">
+                            <h3 style="margin:0">Hotels</h3>
+                        </div>
+                        <div class="row" ng-repeat="mustDo in formData.hotels" ng-if="formData.mustDo.length > 0">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="name" ng-model="formData.name" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Link</label>
+                                    <input type="text" name="link" ng-model="formData.link" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Budget</label>
+                                    <input type="text" name="budget" ng-model="formData.budget" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Category Type</label>
+                                    <input type="text" name="category" ng-model="formData.category" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Star Rating</label>
+                                    <input type="text" name="starRating" ng-model="formData.starRating" class="form-control" only-digits>
+                                </div>
+                                <div class="form-group">
+                                    <label>User Rating</label>
+                                    <input type="text" name="userRating" ng-model="formData.userRating" class="form-control" only-digits>
+                                </div>
+                                <div class="form-group">
+                                    <label>Report Closed</label>
+                                    <select name="report" ng-model="formData.status" ng-options="item.value as item.name for item in values" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary" ng-click="addHotel()">Add Hotel</button>
+                            </div>
+                        </div>
                         <div class="text-center mt20 odd-even-button">
                             <button class="btn btn-default" type="submit" ng-click="saveCity(formData)" ng-disabled="cityform.$invalid">Save</button>
                             <button class="btn btn-default" ui-sref="city-list({page:search.page,keyword:search.keyword,country:search.country,name:search.name})">Cancel</button>
