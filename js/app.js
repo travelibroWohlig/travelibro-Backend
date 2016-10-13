@@ -74,96 +74,30 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
         controller: 'EditCityCtrl'
     })
 
-    // .state('countryMustDo-list', {
-    //     url: "/countryMustDo-list/{page:.*}/{keyword:.*}",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CountryMustDoCtrl',
-    //     params: {
-    //         page: "1",
-    //         keyword: ""
-    //     }
-    // })
+    .state('user-list', {
+        url: "/user-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'UserCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
 
-    // .state('createCountryMustDo', {
-    //     url: "/countryMustDo-detail",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CreateCountryMustDoCtrl'
-    // })
+    .state('createUser', {
+        url: "/user-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateUserCtrl'
+    })
 
-    // .state('editCountryMustDo', {
-    //     url: "/countryMustDo-edit/:id",
-    //     templateUrl: "views/template.html",
-    //     controller: 'EditCountryMustDoCtrl'
-    // })
-
-    // .state('cityMustDo-list', {
-    //     url: "/cityMustDo-list/{page:.*}/{keyword:.*}",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CityMustDoCtrl',
-    //     params: {
-    //         page: "1",
-    //         keyword: ""
-    //     }
-    // })
-
-    // .state('createCityMustDo', {
-    //     url: "/cityMustDo-detail",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CreateCityMustDoCtrl'
-    // })
-
-    // .state('editCityMustDo', {
-    //     url: "/cityMustDo-edit/:id",
-    //     templateUrl: "views/template.html",
-    //     controller: 'EditCityMustDoCtrl'
-    // })
-
-    // .state('cityHotel-list', {
-    //     url: "/cityHotel-list/{page:.*}/{keyword:.*}",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CityHotelCtrl',
-    //     params: {
-    //         page: "1",
-    //         keyword: ""
-    //     }
-    // })
-
-    // .state('createCityHotel', {
-    //     url: "/cityHotel-detail",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CreateCityHotelCtrl'
-    // })
-
-    // .state('editCityHotel', {
-    //     url: "/cityHotel-edit/:id",
-    //     templateUrl: "views/template.html",
-    //     controller: 'EditCityHotelCtrl'
-    // })
-
-    // .state('cityRestaurant-list', {
-    //     url: "/cityRestaurant-list/{page:.*}/{keyword:.*}",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CityRestaurantCtrl',
-    //     params: {
-    //         page: "1",
-    //         keyword: ""
-    //     }
-    // })
-
-    // .state('createCityRestaurant', {
-    //     url: "/cityRestaurant-detail",
-    //     templateUrl: "views/template.html",
-    //     controller: 'CreateCityRestaurantCtrl'
-    // })
-
-    // .state('editCityRestaurant', {
-    //     url: "/cityRestaurant-edit/:id",
-    //     templateUrl: "views/template.html",
-    //     controller: 'EditCityRestaurantCtrl'
-    // })
+    .state('editUser', {
+        url: "/user-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditUserCtrl'
+    })
 
     ;
-    $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
 
 });

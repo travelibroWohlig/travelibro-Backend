@@ -973,5 +973,9 @@ header.side-header.light-skin {
     margin-top: 4px;
 }
 
+.account-form > form .feild > .login-w.buttonCenter {
+    float: none;
+}
+
 @import "fancybox-override";
 @import "other/mobile";

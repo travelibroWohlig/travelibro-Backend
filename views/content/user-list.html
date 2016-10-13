@@ -1,17 +1,16 @@
 <!-- <div id="progressBar">
-	<div class="loader"></div>
+    <div class="loader"></div>
 </div> -->
 <div class="breadcrumbs">
     <ul>
         <li>
-            <a title="Home">Company Setup</a>
+            <a title="Home">Locations</a>
         </li>
         <li>
-            <a ui-sref="user-list" >User List</a>
+            <a ui-sref="user-list">User List</a>
         </li>
     </ul>
 </div>
-
 <div class="heading-sec">
     <div class="row">
         <div class="col-md-4 column">
@@ -27,46 +26,55 @@
         <div class="col-md-12">
             <div class="widget">
                 <div class="table-area">
-
                     <div class="widget-title">
-                        <div class="pull-right">
-                          <form class="search-form mr-form">
-                              <input type="text" placeholder="Search Here..."/>
-                              <button type="submit">
-                                  <i class="fa fa-search"></i>
-                              </button>
-                          </form>
-                            <a class="btn btn-primary" ui-sref="createuser">Add New</a>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>List of Users <span class="tableTotal">(Total : {{totalItems}}) </span></h4>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-5">
+                                <div class="pull-right">
+                                    <form class="search-form mr-form">
+                                        <input type="text" ng-change="showAllUsers(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                    </form>
+                                    <a class="btn btn-primary" ui-sref="createuser">Add New</a>
+                                </div>
+                            </div>
                         </div>
-                        <h3>List of Users</h3>
                     </div>
                     <div class="table-responsive" ng-show="totalItems>0">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>User Name</th>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>Name</th>
                                     <th>Email</th>
-                                    <th>Employee Type</th>
-                                    <th>Access</th>
-                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="user in allUsers">
+                                <tr ng-repeat="user in users">
+                                    <td>{{($index + 1)+((currentPage-1)*maxRow)}}</td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>
-                                    <td>{{user.emp_type}}</td>
-                                    <td>{{user.access}}</td>
-                                    <td>{{user.status}}</td>
                                     <td>
-                                      <a class="btn btn-primary" ui-sref="edituser({id:user._id})"><i class="fa fa-pencil"></i></a>
-                                      <a class="btn btn-danger" ng-click="deleteUser(user._id)"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-primary" ng-click="showUser(user.urlSlug)">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div class="table-responsive" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ var imgurl = adminurl + "upload/";
 
 var imgpath = imgurl + "readFile";
 var uploadurl = imgurl;
+var openTab = adminurl + "user/showUser?user=";
 
 var navigationservice = angular.module('navigationservice', [])
 
@@ -24,6 +25,12 @@ var navigationservice = angular.module('navigationservice', [])
         name: "City",
         classis: "active",
         anchor: "city-list",
+        icon: "puzzle-piece",
+        subnav: []
+    }, {
+        name: "User",
+        classis: "active",
+        anchor: "user-list",
         icon: "puzzle-piece",
         subnav: []
     }];
@@ -51,6 +58,9 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }
             return menuname;
+        },
+        login: function(data, callback) {
+            $http.post(adminurl + 'admin/login', data).success(callback);
         },
         dashboardCount: function(data, callback) {
             $http.post(adminurl + 'config/dashboardCount', data).success(callback);
@@ -124,6 +134,32 @@ var navigationservice = angular.module('navigationservice', [])
         },
         deleteCity: function(id, callback) {
             $http.post(adminurl + 'city/delete', {
+                _id: id
+            }).success(callback);
+        },
+        searchUser: function(formData, i, callback) {
+            $http.post(adminurl + 'user/search', formData).success(function(data) {
+                callback(data, i);
+            });
+        },
+        userSave: function(formData, callback) {
+            $http.post(adminurl + 'user/save', formData).success(callback);
+        },
+        getOneUser: function(id, callback) {
+            // console.log('form data: ', formData);
+            $http({
+                url: adminurl + 'user/getOne',
+                method: 'POST',
+                data: {
+                    "_id": id
+                }
+            }).success(callback);
+        },
+        userEditSave: function(formData, callback) {
+            $http.post(adminurl + 'user/save', formData).success(callback);
+        },
+        deleteUser: function(id, callback) {
+            $http.post(adminurl + 'user/delete', {
                 _id: id
             }).success(callback);
         },

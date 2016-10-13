@@ -29,43 +29,71 @@
                     <form name="cityform" role="form" class="sec ng-pristine ng-valid">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group ui-select">
-                                    <label>Country*</label>
-                                    <multiple-select name="country" required ng-model="formData.country" ng-name="name.country" api="searchCountry" ng-create="countrySave"></multiple-select>
-                                    <div class="error-msg" ng-show="cityform.country.$invalid">Please Enter Country</div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group ui-select">
+                                            <label>Country*</label>
+                                            <multiple-select name="country" required ng-model="formData.country" ng-name="name.country" api="searchCountry" ng-create="countrySave"></multiple-select>
+                                            <div class="error-msg" ng-show="cityform.country.$invalid">Please Enter Country</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group ui-select">
+                                            <label>City*</label>
+                                            <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                            <div class="error-msg" ng-show="cityform.name.$invalid && cityform.name.$touched">Please Enter City</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group ui-select">
-                                    <label>City*</label>
-                                    <input type="text" name="name" ng-model="formData.name" class="form-control" required>
-                                    <div class="error-msg" ng-show="cityform.name.$invalid && cityform.name.$touched">Please Enter City</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea style="resize:none; min-height: 100px;" name="Description" ng-model="formData.description" class="form-control"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="Description" ng-model="formData.description" class="form-control"></textarea>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Best Month</label>
+                                            <input type="text" ng-model="formData.bestMonth" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Best Weather</label>
+                                            <input type="text" ng-model="formData.bestWeather" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Best Season</label>
+                                            <input type="text" ng-model="formData.bestSeason" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Best Month</label>
-                                    <input type="text" ng-model="formData.bestMonth" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upload Cover Photo</label>
+                                            <upload-image ng-model="formData.cityCoverPhoto"></upload-image>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upload Itinerary Banner</label>
+                                            <upload-image ng-model="formData.cityItineraryPhoto"></upload-image>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Best Weather</label>
-                                    <input type="text" ng-model="formData.bestWeather" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Best Season</label>
-                                    <input type="text" ng-model="formData.bestSeason" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Cover Photo</label>
-                                    <upload-image ng-model="formData.cityCoverPhoto"></upload-image>
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Display Photo</label>
-                                    <upload-image ng-model="formData.cityDisplayPhoto"></upload-image>
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Itinerary Banner</label>
-                                    <upload-image ng-model="formData.cityItineraryPhoto"></upload-image>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upload Display Photo</label>
+                                            <upload-image ng-model="formData.cityDisplayPhoto"></upload-image>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -82,22 +110,32 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Sequence No.</label>
                                             <input type="text" name="mustDo.sequence" ng-model="mustDo.sequenceNo" class="form-control" only-digits>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Name</label>
                                             <input type="text" name="mustDo.name" ng-model="mustDo.name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Image Credit</label>
+                                            <input type="text" name="credit" ng-model="mustDo.imageCredit" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="Description" ng-model="mustDo.description" class="form-control"></textarea>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea style="resize: none; min-height: 100px;" name="Description" ng-model="mustDo.description" class="form-control"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -107,10 +145,6 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Image Credit</label>
-                                            <input type="text" name="credit" ng-model="mustDo.imageCredit" class="form-control">
-                                        </div>
                                     </div>
                                 </div>
                                 <hr class="hrSingleWidth">
@@ -124,41 +158,145 @@
                         <div class="widget-title countryRepeat">
                             <h3 style="margin:0">Hotels</h3>
                         </div>
-                        <div class="row" ng-repeat="mustDo in formData.hotels" ng-if="formData.mustDo.length > 0">
+                        <div class="row" ng-repeat="hotel in formData.hotel" ng-if="formData.hotel.length > 0">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" name="name" ng-model="formData.name" class="form-control">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        <a class="btn btn-danger marginDelete" ng-click="deleteHotel($index)" title="Delete Hotel">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Link</label>
-                                    <input type="text" name="link" ng-model="formData.link" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" name="name" ng-model="hotel.name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Link</label>
+                                            <input type="text" name="link" ng-model="hotel.link" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Budget</label>
-                                    <input type="text" name="budget" ng-model="formData.budget" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Budget</label>
+                                            <input type="text" name="budget" ng-model="hotel.budget" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Category Type</label>
+                                            <input type="text" name="category" ng-model="hotel.category" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Category Type</label>
-                                    <input type="text" name="category" ng-model="formData.category" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Star Rating</label>
+                                            <input type="text" name="starRating" ng-model="hotel.starRating" class="form-control" only-digits>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>User Rating</label>
+                                            <input type="text" name="userRating" ng-model="hotel.userRating" class="form-control" only-digits>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Star Rating</label>
-                                    <input type="text" name="starRating" ng-model="formData.starRating" class="form-control" only-digits>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Report Closed</label>
+                                            <select name="report" ng-model="hotel.status" ng-options="item.value as item.name for item in values" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>User Rating</label>
-                                    <input type="text" name="userRating" ng-model="formData.userRating" class="form-control" only-digits>
-                                </div>
-                                <div class="form-group">
-                                    <label>Report Closed</label>
-                                    <select name="report" ng-model="formData.status" ng-options="item.value as item.name for item in values" class="form-control"></select>
-                                </div>
+                                <hr class="hrSingleWidth">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group text-center">
                                 <button class="btn btn-primary" ng-click="addHotel()">Add Hotel</button>
+                            </div>
+                        </div>
+                        <div class="widget-title countryRepeat">
+                            <h3 style="margin:0">Restaurants</h3>
+                        </div>
+                        <div class="row" ng-repeat="restaurant in formData.restaurant" ng-if="formData.restaurant.length > 0">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        <a class="btn btn-danger marginDelete" ng-click="deleteRestaurant($index)" title="Delete Restaurant">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" name="name" ng-model="restaurant.name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Link</label>
+                                            <input type="text" name="link" ng-model="restaurant.link" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Budget</label>
+                                            <input type="text" name="budget" ng-model="restaurant.budget" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Category Type</label>
+                                            <input type="text" name="category" ng-model="restaurant.category" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Star Rating</label>
+                                            <input type="text" name="starRating" ng-model="restaurant.starRating" class="form-control" only-digits>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>User Rating</label>
+                                            <input type="text" name="userRating" ng-model="restaurant.userRating" class="form-control" only-digits>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Report Closed</label>
+                                            <select name="report" ng-model="restaurant.status" ng-options="item.value as item.name for item in values" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
+                                </div>
+                                <hr class="hrSingleWidth">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary" ng-click="addRestaurant()">Add Restaurant</button>
                             </div>
                         </div>
                         <div class="text-center mt20 odd-even-button">

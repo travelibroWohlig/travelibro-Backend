@@ -1,6 +1,33 @@
 var globalfunction = {};
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys'])
 
+.controller('headerctrl', function($scope, TemplateService, $uibModal, $state) {
+    $scope.template = TemplateService;
+    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+        $(window).scrollTop(0);
+    });
+    if (!$.jStorage.get("adminuser")) {
+        $state.go("login");
+    }
+    $scope.logout = function() {
+        $.jStorage.flush();
+        $state.go("login");
+    }
+    globalfunction.confDel = function(callback) {
+
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/conf-delete.html',
+            size: 'sm',
+            scope: $scope
+        });
+        $scope.close = function(value) {
+            callback(value);
+            modalInstance.close("cancel");
+        };
+    };
+})
+
 .controller('DashboardCtrl', function($scope, TemplateService, NavigationService, $timeout) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("dashboard");
@@ -12,12 +39,27 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
 })
 
-.controller('LoginCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('LoginCtrl', function($scope, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("login");
     $scope.menutitle = NavigationService.makeactive("Login");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.showErr = false;
+    $scope.login = function() {
+        NavigationService.login($scope.formData, function(data) {
+            if (data.value) {
+                $.jStorage.set("adminuser", data.data);
+                $state.go("dashboard");
+            } else {
+                $scope.showErr = true;
+                $timeout(function() {
+                    $scope.showErr = false;
+                }, 3500);
+            }
+        });
+    }
 })
 
 .controller('CountryCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
@@ -285,7 +327,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.menutitle = NavigationService.makeactive("City");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-
+    $scope.values = [{ value: "", name: "Select Status" }, { value: false, name: "Not Closed" }, { value: true, name: "Closed" }];
     $scope.header = {
         "name": "Create City"
     };
@@ -317,6 +359,68 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         });
     }
+    $scope.addHotel = function() {
+        if ($scope.formData.hotel && $scope.formData.hotel.length > 0) {
+            $scope.formData.hotel.push({
+                sequenceNo: "",
+                name: "",
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
+            });
+        } else {
+            $scope.formData.hotel = [];
+            $scope.formData.hotel.push({
+                sequenceNo: "",
+                name: "",
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
+            });
+        }
+    }
+    $scope.deleteHotel = function(index) {
+        globalfunction.confDel(function(value) {
+            if (value) {
+                var abc = _.pullAt($scope.formData.hotel, [index]);
+            }
+        });
+    }
+    $scope.addRestaurant = function() {
+        if ($scope.formData.restaurant && $scope.formData.restaurant.length > 0) {
+            $scope.formData.restaurant.push({
+                sequenceNo: "",
+                name: "",
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
+            });
+        } else {
+            $scope.formData.restaurant = [];
+            $scope.formData.restaurant.push({
+                sequenceNo: "",
+                name: "",
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
+            });
+        }
+    }
+    $scope.deleteRestaurant = function(index) {
+        globalfunction.confDel(function(value) {
+            if (value) {
+                var abc = _.pullAt($scope.formData.restaurant, [index]);
+            }
+        });
+    }
     $scope.saveCity = function(formData) {
         NavigationService.citySave($scope.formData, function(data) {
             if (data.value === true) {
@@ -336,6 +440,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.removeArrMustDo = [];
+    $scope.removeArrHotel = [];
+    $scope.removeArrRestaurant = [];
     $scope.search = {
         page: $stateParams.page,
         keyword: $stateParams.keyword,
@@ -388,18 +494,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.formData.hotel.push({
                 sequenceNo: "",
                 name: "",
-                description: "",
-                mainPhoto: "",
-                imageCredit: ""
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
             });
         } else {
             $scope.formData.hotel = [];
             $scope.formData.hotel.push({
                 sequenceNo: "",
                 name: "",
-                description: "",
-                mainPhoto: "",
-                imageCredit: ""
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
             });
         }
     }
@@ -409,7 +519,44 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             if (value) {
                 var abc = _.pullAt($scope.formData.hotel, [index]);
                 if (abc[0]._id) {
-                    $scope.removeArrMustDo.push(abc[0]._id);
+                    $scope.removeArrHotel.push(abc[0]._id);
+                } else {
+                    abc = {};
+                }
+            }
+        });
+    }
+    $scope.addRestaurant = function() {
+        if ($scope.formData.restaurant && $scope.formData.restaurant.length > 0) {
+            $scope.formData.restaurant.push({
+                sequenceNo: "",
+                name: "",
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
+            });
+        } else {
+            $scope.formData.restaurant = [];
+            $scope.formData.restaurant.push({
+                sequenceNo: "",
+                name: "",
+                link: "",
+                starRating: "",
+                status: "",
+                budget: "",
+                userRating: ""
+            });
+        }
+    }
+    $scope.deleteRestaurant = function(index) {
+        globalfunction.confDel(function(value) {
+            console.log(value);
+            if (value) {
+                var abc = _.pullAt($scope.formData.restaurant, [index]);
+                if (abc[0]._id) {
+                    $scope.removeArrRestaurant.push(abc[0]._id);
                 } else {
                     abc = {};
                 }
@@ -418,6 +565,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
     $scope.saveCity = function(formValid) {
         $scope.formData.removeArrMustDo = $scope.removeArrMustDo;
+        $scope.formData.removeArrHotel = $scope.removeArrHotel;
+        $scope.formData.removeArrRestaurant = $scope.removeArrRestaurant;
         NavigationService.cityEditSave($scope.formData, function(data) {
             if (data.value === true) {
                 $state.go('city-list', {
@@ -434,32 +583,67 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('UserCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('UserCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("user-list");
-    $scope.menutitle = NavigationService.makeactive("User List");
+    $scope.menutitle = NavigationService.makeactive("User");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $scope.UserType = ['internal', 'external'];
-    $scope.showAllUsers = function() {
-        NavigationService.getAllUsers(function(data) {
-            $scope.allUsers = data.data;
-            console.log('$scope.allUsers', $scope.allZones);
-        });
-
+    $scope.currentPage = $stateParams.page;
+    var i = 0;
+    $scope.search = {
+        keyword: ""
     };
-    $scope.showAllUsers();
-
-
-    $scope.deleteUser = function(id) {
-
-        NavigationService.deleteUser({
-            id: id
-        }, function(data) {
-            $scope.showAllUsers();
-
-        });
+    if ($stateParams.keyword) {
+        $scope.search.keyword = $stateParams.keyword;
     }
+    $scope.showAllUsers = function(keywordChange) {
+        $scope.totalItems = undefined;
+        if (keywordChange) {
+            $scope.currentPage = 1;
+        }
+        NavigationService.searchUser({
+            page: $scope.currentPage,
+            keyword: $scope.search.keyword
+        }, ++i, function(data, ini) {
+            if (ini == i) {
+                $scope.users = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            }
+        });
+    };
+
+    $scope.changePage = function(page) {
+        var goTo = "user-list";
+        if ($scope.search.keyword) {
+            goTo = "user-list";
+        }
+        $state.go(goTo, {
+            page: page,
+            keyword: $scope.search.keyword
+        });
+    };
+    $scope.showUser = function(value) {
+        window.open(openTab + value);
+    };
+
+    $scope.showAllUsers();
+    $scope.deleteUser = function(id) {
+        globalfunction.confDel(function(value) {
+            console.log(value);
+            if (value) {
+                NavigationService.deleteUser(id, function(data) {
+                    if (data.value) {
+                        $scope.showAllUsers();
+                        toastr.success("User deleted successfully.", "User deleted");
+                    } else {
+                        toastr.error("There was an error while deleting user", "User deleting error");
+                    }
+                });
+            }
+        });
+    };
 })
 
 .controller('CreateUserCtrl', function($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -717,35 +901,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.ngName = name;
         $scope.model = val;
         $scope.listview = false;
-    };
-})
-
-.controller('headerctrl', function($scope, TemplateService, $uibModal, $state) {
-    $scope.template = TemplateService;
-    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-        $(window).scrollTop(0);
-    });
-    // $scope.samePageClick = function(current) {
-    //     if ($state.current.name == current) {
-    //         $state.reload();
-    //     } else {
-    //         console.log(current);
-    //         console.log($state.current.name);
-    //         $state.go(current);
-    //     }
-    // };
-    globalfunction.confDel = function(callback) {
-
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: 'views/modal/conf-delete.html',
-            size: 'sm',
-            scope: $scope
-        });
-        $scope.close = function(value) {
-            callback(value);
-            modalInstance.close("cancel");
-        };
     };
 })
 

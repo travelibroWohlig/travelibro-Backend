@@ -29,52 +29,87 @@
                     <form name="countryform" role="form" class="sec ng-pristine ng-valid">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Name*</label>
-                                    <input type="text" name="name" ng-model="formData.name" class="form-control" required>
-                                    <div class="error-msg" ng-show="countryform.name.$invalid && countryform.name.$touched">Please Enter Country</div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Name*</label>
+                                            <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                            <div class="error-msg" ng-show="countryform.name.$invalid && countryform.name.$touched">Please Enter Country</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Country Code*</label>
+                                            <input type="text" name="countryCode" ng-model="formData.countryCode" class="form-control text-upper" maxlength="2" required>
+                                            <div class="error-msg" ng-show="countryform.countryCode.$invalid && countryform.countryCode.$touched">Please Enter Country Code</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Currency*</label>
+                                            <input type="text" name="Currency" ng-model="formData.currency" class="form-control" required>
+                                            <div class="error-msg" ng-show="countryform.currency.$invalid && countryform.currency.$touched">Please Enter Currency</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Country Code*</label>
-                                    <input type="text" name="countryCode" ng-model="formData.countryCode" class="form-control text-upper" maxlength="2" required>
-                                    <div class="error-msg" ng-show="countryform.countryCode.$invalid && countryform.countryCode.$touched">Please Enter Country Code</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea style="resize: none; min-height: 100px;;" name="Description" ng-model="formData.description" class="form-control"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="Description" ng-model="formData.description" class="form-control"></textarea>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Capital</label>
+                                            <input type="text" ng-model="formData.capital" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Weather</label>
+                                            <input type="text" ng-model="formData.weather" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Currency*</label>
-                                    <input type="text" name="Currency" ng-model="formData.currency" class="form-control" required>
-                                    <div class="error-msg" ng-show="countryform.currency.$invalid && countryform.currency.$touched">Please Enter Currency</div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Temperature</label>
+                                            <input type="text" ng-model="formData.temperature" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Best Time</label>
+                                            <input type="text" ng-model="formData.bestTime" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Capital</label>
-                                    <input type="text" ng-model="formData.capital" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upload Flag</label>
+                                            <upload-image ng-model="formData.flag"></upload-image>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upload Cover Photo</label>
+                                            <upload-image ng-model="formData.countryCoverPhoto"></upload-image>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Weather</label>
-                                    <input type="text" ng-model="formData.weather" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Temperature</label>
-                                    <input type="text" ng-model="formData.temperature" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Best Time</label>
-                                    <input type="text" ng-model="formData.bestTime" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Flag</label>
-                                    <upload-image ng-model="formData.flag"></upload-image>
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Cover Photo</label>
-                                    <upload-image ng-model="formData.countryCoverPhoto"></upload-image>
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload Itinerary Banner</label>
-                                    <upload-image ng-model="formData.countryItineraryBanner"></upload-image>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upload Itinerary Banner</label>
+                                            <upload-image ng-model="formData.countryItineraryBanner"></upload-image>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
                                 </div>
                             </div>
                         </div>
@@ -91,22 +126,32 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Sequence No.</label>
                                             <input type="text" name="mustDo.sequence" ng-model="mustDo.sequenceNo" class="form-control" only-digits>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Name</label>
                                             <input type="text" name="mustDo.name" ng-model="mustDo.name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Image Credit</label>
+                                            <input type="text" name="credit" ng-model="mustDo.imageCredit" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="Description" ng-model="mustDo.description" class="form-control"></textarea>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea style="resize: none; min-height: 100px;" name="Description" ng-model="mustDo.description" class="form-control"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -116,10 +161,6 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Image Credit</label>
-                                            <input type="text" name="credit" ng-model="mustDo.imageCredit" class="form-control">
-                                        </div>
                                     </div>
                                 </div>
                                 <hr class="hrSingleWidth">
