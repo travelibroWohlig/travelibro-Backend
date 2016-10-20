@@ -976,6 +976,7 @@ header.side-header.light-skin {
 .account-form > form .feild > .login-w.buttonCenter {
     float: none;
 }
+.table td.mail-lowercase { text-transform: none; } 
 
 @import "fancybox-override";
 @import "other/mobile";

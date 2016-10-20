@@ -58,7 +58,7 @@
                                 <tr ng-repeat="user in users">
                                     <td>{{($index + 1)+((currentPage-1)*maxRow)}}</td>
                                     <td>{{user.name}}</td>
-                                    <td>{{user.email}}</td>
+                                    <td class="mail-lowercase">{{user.email}}</td>
                                     <td>
                                         <a class="btn btn-primary" ng-click="showUser(user.urlSlug)">
                                             <i class="fa fa-eye"></i>
